@@ -32,7 +32,7 @@ export default defineConfig({
     trace: 'on-first-retry',
     
     /* Execution evidance */
-    screenshot: 'on',
+    screenshot: 'only-on-failure',
     // video: 'on',
   },
 
