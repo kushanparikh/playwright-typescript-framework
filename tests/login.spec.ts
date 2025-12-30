@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('Able to login', async ({ page }) => {
+test('should login successfully with valid credentials', async ({ page }) => {
   await page.goto('https://www.saucedemo.com/');
 
   // Expect a title "to contain" a substring.
@@ -13,6 +13,6 @@ test('Able to login', async ({ page }) => {
   // Click login button
   await page.click('input[id="login-button"]');
 
-  // Verify login
-  await expect(page).toHaveTitle('Swag Labs');
+  // Verify URL has changed
+  await expect(page).toHaveURL(/inventory/);
 });
