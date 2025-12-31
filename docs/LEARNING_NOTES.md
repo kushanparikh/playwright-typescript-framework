@@ -6,14 +6,79 @@ Personal reference documentation for Playwright concepts and TypeScript patterns
 
 ## Table of Contents
 
-1. [Test Structure](#test-structure)
-2. [Fixtures](#fixtures)
-3. [testInfo Object](#testinfo-object)
-4. [Hooks](#hooks)
-5. [Locator Strategies](#locator-strategies)
-6. [Configuration](#configuration)
-7. [Assertions](#assertions)
-8. [TypeScript Patterns](#typescript-patterns)
+1. [Metadata Objects Overview](#metadata-objects-overview)
+2. [testInfo Object](#testinfo-object)
+3. [workerInfo Object](#workerinfo-object)
+4. [Accessing Project and Config](#accessing-project-and-config)
+5. [Test Structure](#test-structure)
+6. [Fixtures](#fixtures)
+7. [Hooks](#hooks)
+8. [Locator Strategies](#locator-strategies)
+9. [Configuration](#configuration)
+10. [Assertions](#assertions)
+11. [TypeScript Patterns](#typescript-patterns)
+
+---
+
+## Metadata Objects Overview
+
+Playwright provides several metadata objects for accessing information about test execution, workers, and configuration.
+
+### Quick Comparison
+
+| Object | Available In | Purpose |
+|--------|--------------|---------|
+| `testInfo` | Individual tests, `beforeEach`, `afterEach` | Current test metadata |
+| `workerInfo` | `beforeAll`, `afterAll` | Worker process metadata |
+| `testInfo.project` | Via testInfo | Current browser/project config |
+| `testInfo.config` | Via testInfo | Full Playwright config |
+
+### When to Use Each
+
+| Scenario | Use |
+|----------|-----|
+| Attach screenshot to report | `testInfo.attach()` |
+| Browser-specific logic | `testInfo.project.name` |
+| Parallel worker isolation | `workerInfo.workerIndex` |
+| Check retry count | `testInfo.retry` |
+| Skip test conditionally | `testInfo.skip()` |
+| Worker-specific database | `workerInfo.workerIndex` |
+
+### Full Example
+
+```typescript
+import { test, expect } from '@playwright/test';
+
+test.beforeAll(async ({}, workerInfo) => {
+  console.log(`Worker ${workerInfo.workerIndex} starting`);
+  console.log(`Project: ${workerInfo.project.name}`);
+});
+
+test.beforeEach(async ({ page }, testInfo) => {
+  console.log(`Running: ${testInfo.title}`);
+  console.log(`Browser: ${testInfo.project.name}`);
+  console.log(`Retry: ${testInfo.retry}`);
+});
+
+test('example with metadata', async ({ page }, testInfo) => {
+  // Skip on specific browser
+  if (testInfo.project.name === 'webkit') {
+    testInfo.skip(true, 'Safari not supported yet');
+  }
+  
+  await page.goto('/');
+  
+  // Attach screenshot
+  await testInfo.attach('homepage', {
+    body: await page.screenshot(),
+    contentType: 'image/png',
+  });
+});
+
+test.afterAll(async ({}, workerInfo) => {
+  console.log(`Worker ${workerInfo.workerIndex} finished`);
+});
+```
 
 ---
 
@@ -103,6 +168,21 @@ test('my test', async ({ page, context, request }) => {
 
 ---
 
+## Test Structure
+
+Playwright provides several metadata objects for accessing information about test execution, workers, and configuration.
+
+### Quick Comparison
+
+| Object | Available In | Purpose |
+|--------|--------------|---------|
+| `testInfo` | Individual tests, `beforeEach`, `afterEach` | Current test metadata |
+| `workerInfo` | `beforeAll`, `afterAll` | Worker process metadata |
+| `testInfo.project` | Via testInfo | Current browser/project config |
+| `testInfo.config` | Via testInfo | Full Playwright config |
+
+---
+
 ## testInfo Object
 
 ### What Is testInfo?
@@ -185,6 +265,103 @@ test('my test', async ({ page }, testInfo) => {
 ```typescript
 test('my test', async ({ page }, testInfo) => {
   console.log(`Attempt ${testInfo.retry + 1}`);
+});
+```
+
+---
+
+## workerInfo Object
+
+### What Is workerInfo?
+
+`workerInfo` provides metadata about the **worker process** running tests. Available in `beforeAll` and `afterAll` hooks (not in individual tests).
+
+### Syntax
+
+```typescript
+test.beforeAll(async ({}, workerInfo) => {
+  console.log(workerInfo.workerIndex);
+});
+```
+
+**Note:** The empty `{}` is required because `beforeAll` doesn't have access to `page` fixture.
+
+### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `workerInfo.workerIndex` | number | Unique index of this worker (0, 1, 2...) |
+| `workerInfo.parallelIndex` | number | Index among parallel workers |
+| `workerInfo.project` | object | Current project configuration |
+| `workerInfo.config` | object | Full Playwright configuration |
+
+### Use Cases
+
+**Worker-specific database setup:**
+```typescript
+test.beforeAll(async ({}, workerInfo) => {
+  // Each parallel worker gets its own database
+  const dbName = `test_db_${workerInfo.workerIndex}`;
+  await setupDatabase(dbName);
+});
+```
+
+**Worker-specific port assignment:**
+```typescript
+test.beforeAll(async ({}, workerInfo) => {
+  const port = 3000 + workerInfo.workerIndex;
+  await startServer(port);
+});
+```
+
+---
+
+## Accessing Project and Config
+
+### Via testInfo
+
+```typescript
+test('my test', async ({ page }, testInfo) => {
+  // Project info (current browser)
+  console.log(testInfo.project.name);       // "chromium"
+  console.log(testInfo.project.outputDir);  // Where artifacts go
+  console.log(testInfo.project.use);        // Project-specific settings
+  
+  // Full config
+  console.log(testInfo.config.testDir);     // "./tests"
+  console.log(testInfo.config.workers);     // Number of workers
+  console.log(testInfo.config.reporter);    // Reporter type
+});
+```
+
+### Via workerInfo
+
+```typescript
+test.beforeAll(async ({}, workerInfo) => {
+  console.log(workerInfo.project.name);
+  console.log(workerInfo.config.testDir);
+});
+```
+
+### Common Patterns
+
+**Browser-specific logic:**
+```typescript
+test('my test', async ({ page }, testInfo) => {
+  if (testInfo.project.name === 'webkit') {
+    // Safari-specific handling
+    testInfo.skip(true, 'Not supported on Safari');
+  }
+});
+```
+
+**Environment-aware setup:**
+```typescript
+test.beforeAll(async ({}, workerInfo) => {
+  const isCI = workerInfo.config.workers === 1;
+  if (isCI) {
+    // CI-specific setup
+  }
 });
 ```
 
