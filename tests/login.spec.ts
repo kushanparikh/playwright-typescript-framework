@@ -50,3 +50,36 @@ test('should show error with non-existent username', async ({ page }) => {
   //Verify error message is displayed
   await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Username and password do not match any user in this service');
 });
+
+test('should show error with empty password', async ({ page }) => {
+  await page.goto('https://www.saucedemo.com/');
+
+  //Expect a title "to contain" a substring.
+  await expect(page).toHaveTitle('Swag Labs');
+
+  //Enter user name and password as empty string
+  await page.fill('input[name="user-name"]', 'standard_user');
+  await page.fill('input[name="password"]', '');
+
+  //Click login button
+  await page.click('input[id="login-button"]');
+
+  //Verify error message is displayed
+  await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Password is required');
+});
+
+test('should show error with empty username', async ({ page }) => {
+  await page.goto('https://www.saucedemo.com/');
+
+  //Expect a title "to contain" a substring.
+  await expect(page).toHaveTitle('Swag Labs');
+
+  //Enter password and keep username empty
+  await page.fill('input[name="password"]', 'secret_sauce');
+
+  //Click login button
+  await page.click('input[id="login-button"]');
+
+  //Verify error message is displayed
+  await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Username is required');
+});
