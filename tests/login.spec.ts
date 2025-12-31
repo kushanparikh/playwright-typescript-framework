@@ -1,11 +1,13 @@
 import { test, expect } from '@playwright/test';
 
-test('should login successfully with valid credentials', async ({ page }) => {
+test.beforeEach(async ({ page }) => {
   await page.goto('https://www.saucedemo.com/');
 
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle('Swag Labs');
+});
 
+test('should login successfully with valid credentials', async ({ page }) => {
   // Enter user name and password
   await page.fill('input[name="user-name"]', 'standard_user');
   await page.fill('input[name="password"]', 'secret_sauce');
@@ -18,11 +20,6 @@ test('should login successfully with valid credentials', async ({ page }) => {
 });
 
 test('should show error for locked out user', async ({ page }) => {
-  await page.goto('https://www.saucedemo.com/');
-
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle('Swag Labs');
-
   // Enter user name and password
   await page.fill('input[name="user-name"]', 'locked_out_user');
   await page.fill('input[name="password"]', 'secret_sauce');
@@ -35,11 +32,6 @@ test('should show error for locked out user', async ({ page }) => {
 });
 
 test('should show error with non-existent username', async ({ page }) => {
-  await page.goto('https://www.saucedemo.com/');
-
-  //Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle('Swag Labs');
-
   //Enter user name and password
   await page.fill('input[name="user-name"]', 'invalid_user');
   await page.fill('input[name="password"]', 'secret_sauce');
@@ -52,11 +44,6 @@ test('should show error with non-existent username', async ({ page }) => {
 });
 
 test('should show error with empty password', async ({ page }) => {
-  await page.goto('https://www.saucedemo.com/');
-
-  //Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle('Swag Labs');
-
   //Enter user name and password as empty string
   await page.fill('input[name="user-name"]', 'standard_user');
   await page.fill('input[name="password"]', '');
@@ -69,11 +56,6 @@ test('should show error with empty password', async ({ page }) => {
 });
 
 test('should show error with empty username', async ({ page }) => {
-  await page.goto('https://www.saucedemo.com/');
-
-  //Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle('Swag Labs');
-
   //Enter password and keep username empty
   await page.fill('input[name="password"]', 'secret_sauce');
 
