@@ -37,7 +37,7 @@ test('should show error for locked out user', async ({ page }, testInfo) => {
   await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Sorry, this user has been locked out.');
 
   // Attach screenshot to report
-  await testInfo.attach('login-page-after-login-error', {
+  await testInfo.attach('error-locked-out-user', {
     body: await page.screenshot(),
     contentType: 'image/png',
   });
@@ -55,7 +55,7 @@ test('should show error with non-existent username', async ({ page }, testInfo) 
   await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Username and password do not match any user in this service');
 
   // Attach screenshot to report
-  await testInfo.attach('login-page-after-login-error', {
+  await testInfo.attach('error-non-existent-username', {
     body: await page.screenshot(),
     contentType: 'image/png',
   });
@@ -73,7 +73,7 @@ test('should show error with empty password', async ({ page }, testInfo) => {
   await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Password is required');
 
   // Attach screenshot to report
-  await testInfo.attach('login-page-after-login-error', {
+  await testInfo.attach('error-empty-password', {
     body: await page.screenshot(),
     contentType: 'image/png',
   });
@@ -90,7 +90,7 @@ test('should show error with empty username', async ({ page }, testInfo) => {
   await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Username is required');
 
   // Attach screenshot to report
-  await testInfo.attach('login-page-after-login-error', {
+  await testInfo.attach('error-empty-username', {
     body: await page.screenshot(),
     contentType: 'image/png',
   });
