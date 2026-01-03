@@ -1,9 +1,10 @@
 import { Page } from '@playwright/test';
 
 export default class LoginPage {
-    // Login page selectors and methods would go here
+    private page: Page;
 
-    constructor(private page: Page) {
+    constructor(page: Page) {
+        this.page = page;
     }
 
     async login(username: string, password: string) {
