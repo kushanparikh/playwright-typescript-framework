@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 
 export default class CartPage {
     private page: Page;
@@ -7,7 +7,29 @@ export default class CartPage {
         this.page = page;
     }
 
+    // Actions
     async addItemToCart(itemTestId: string) {
         await this.page.locator(`[data-test="add-to-cart-${itemTestId}"]`).click();
+    }
+
+    async removeItemFromCart(itemTestId: string) {
+        await this.page.locator(`[data-test="remove-${itemTestId}"]`).click();
+    }
+
+    // Getters - Return element states without assertions
+    getCartBadge(): Locator {
+        return this.page.locator('[data-test="shopping-cart-badge"]');
+    }
+
+    getCartLink(): Locator {
+        return this.page.locator('[data-test="shopping-cart-link"]');
+    }
+
+    getAddToCartButton(itemTestId: string): Locator {
+        return this.page.locator(`[data-test="add-to-cart-${itemTestId}"]`);
+    }
+
+    getRemoveButton(itemTestId: string): Locator {
+        return this.page.locator(`[data-test="remove-${itemTestId}"]`);
     }
 }
