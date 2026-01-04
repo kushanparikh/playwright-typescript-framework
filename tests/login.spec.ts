@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import LoginPage from '../pages/loginPage';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/');
@@ -8,12 +9,9 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('should login successfully with valid credentials', async ({ page }, testInfo) => {
-  // Enter user name and password
-  await page.getByPlaceholder('Username').fill('standard_user');
-  await page.getByPlaceholder('Password').fill('secret_sauce');
-
-  // Click login button
-  await page.getByRole('button', { name: 'Login' }).click();
+  // Use LoginPage to perform login
+  const loginPage = new LoginPage(page);
+  loginPage.login('standard_user', 'secret_sauce')
 
   // Verify URL has changed
   await expect(page).toHaveURL(/inventory/);
@@ -25,73 +23,64 @@ test('should login successfully with valid credentials', async ({ page }, testIn
   });
 });
 
-test('should show error for locked out user', async ({ page }, testInfo) => {
-  // Enter user name and password
-  await page.getByPlaceholder('Username').fill('locked_out_user');
-  await page.getByPlaceholder('Password').fill('secret_sauce');
+test.describe('Login with invalid credentials', () => {
+  test('should show error for locked out user', async ({ page }, testInfo) => {
+    // Use LoginPage to perform login
+    const loginPage = new LoginPage(page);
+    loginPage.login('locked_out_user', 'secret_sauce')
 
-  // Click login button
-  await page.getByRole('button', { name: 'Login' }).click();
+    // Verify error message is displayed
+    await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Sorry, this user has been locked out.');
 
-  // Verify error message is displayed
-  await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Sorry, this user has been locked out.');
-
-  // Attach screenshot to report
-  await testInfo.attach('error-locked-out-user', {
-    body: await page.screenshot(),
-    contentType: 'image/png',
+    // Attach screenshot to report
+    await testInfo.attach('error-locked-out-user', {
+      body: await page.screenshot(),
+      contentType: 'image/png',
+    });
   });
-});
 
-test('should show error with non-existent username', async ({ page }, testInfo) => {
-  //Enter user name and password
-  await page.getByPlaceholder('Username').fill('invalid_user');
-  await page.getByPlaceholder('Password').fill('secret_sauce');
+  test('should show error with non-existent username', async ({ page }, testInfo) => {
+    // Use LoginPage to perform login
+    const loginPage = new LoginPage(page);
+    loginPage.login('invalid_user', 'secret_sauce')
 
-  //Click login button
-  await page.getByRole('button', { name: 'Login' }).click();
+    //Verify error message is displayed
+    await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Username and password do not match any user in this service');
 
-  //Verify error message is displayed
-  await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Username and password do not match any user in this service');
-
-  // Attach screenshot to report
-  await testInfo.attach('error-non-existent-username', {
-    body: await page.screenshot(),
-    contentType: 'image/png',
+    // Attach screenshot to report
+    await testInfo.attach('error-non-existent-username', {
+      body: await page.screenshot(),
+      contentType: 'image/png',
+    });
   });
-});
 
-test('should show error with empty password', async ({ page }, testInfo) => {
-  //Enter user name and password as empty string
-  await page.getByPlaceholder('Username').fill('standard_user');
-  await page.getByPlaceholder('Password').fill('');
+  test('should show error with empty password', async ({ page }, testInfo) => {
+    // Use LoginPage to perform login
+    const loginPage = new LoginPage(page);
+    loginPage.login('standard_user', '');
 
-  //Click login button
-  await page.getByRole('button', { name: 'Login' }).click();
+    //Verify error message is displayed
+    await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Password is required');
 
-  //Verify error message is displayed
-  await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Password is required');
-
-  // Attach screenshot to report
-  await testInfo.attach('error-empty-password', {
-    body: await page.screenshot(),
-    contentType: 'image/png',
+    // Attach screenshot to report
+    await testInfo.attach('error-empty-password', {
+      body: await page.screenshot(),
+      contentType: 'image/png',
+    });
   });
-});
 
-test('should show error with empty username', async ({ page }, testInfo) => {
-  //Enter password and keep username empty
-  await page.getByPlaceholder('Password').fill('secret_sauce');
+  test('should show error with empty username', async ({ page }, testInfo) => {
+    // Use LoginPage to perform login
+    const loginPage = new LoginPage(page);
+    loginPage.login('', 'secret_sauce');
 
-  //Click login button
-  await page.getByRole('button', { name: 'Login' }).click();
+    //Verify error message is displayed
+    await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Username is required');
 
-  //Verify error message is displayed
-  await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Username is required');
-
-  // Attach screenshot to report
-  await testInfo.attach('error-empty-username', {
-    body: await page.screenshot(),
-    contentType: 'image/png',
+    // Attach screenshot to report
+    await testInfo.attach('error-empty-username', {
+      body: await page.screenshot(),
+      contentType: 'image/png',
+    });
   });
 });
