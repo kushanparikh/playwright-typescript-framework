@@ -24,12 +24,6 @@ export default class InventoryPage {
         .selectOption({value: filterType});
     }
 
-    async verifyProductsSortedByPrice(sortOrder: string) {
-        // TODO - Implementation would go here
-        // Example: get all product prices and verify they are in the correct order
-        console.log(`Verifying products are sorted by price in ${sortOrder} order`);
-    }
-
     // Getters - Return element states without assertions
     getCartBadge(): Locator {
         return this.page.locator('[data-test="shopping-cart-badge"]');
@@ -45,5 +39,13 @@ export default class InventoryPage {
 
     getRemoveButton(itemTestId: string): Locator {
         return this.page.locator(`[data-test="remove-${itemTestId}"]`);
+    }
+
+    getItemPriceLocator(): Locator {
+        return this.page.locator('[data-test="inventory-item-price"]');
+    }
+
+    getItemNameLocator(): Locator {
+        return this.page.locator('[data-test="inventory-item-name"]');
     }
 }

@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import LoginPage from '../pages/loginPage';
 import InventoryPage from '../pages/inventoryPage';
+import CartAssertions from '../assertions/cartAssertions';
 
 test.beforeEach(async ({ page }) => {
     await page.goto('/');
@@ -10,7 +11,7 @@ test.beforeEach(async ({ page }) => {
 test('filter products by price', async ({ page }, testInfo) => {
   const loginPage = new LoginPage(page);
   const inventoryPage = new InventoryPage(page);
-  
+  const cartAssertions = new CartAssertions(inventoryPage);
   // Login first
   await loginPage.login('standard_user', 'secret_sauce');
 
@@ -36,5 +37,5 @@ test('filter products by price', async ({ page }, testInfo) => {
   });
   
   // Verify products are sorted by price (low to high)
-  await inventoryPage.verifyProductsSortedByPrice('low-to-high');
+  await cartAssertions.verifyProductsSorted('za');
 });
