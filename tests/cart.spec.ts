@@ -1,14 +1,14 @@
 import { test, expect, Page } from '@playwright/test';
 import LoginPage from '../pages/loginPage';
 import InventoryPage from '../pages/inventoryPage';
-import CartAssertions from '../assertions/cartAssertions';
+import InventoryAssertions from '../assertions/inventoryAssertions';
 
 test.beforeEach(async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveTitle('Swag Labs');
 });
 
-async function verifyCartLandingDetails(page: Page) {
+async function verifyInventoryLandingDetails(page: Page) {
   await expect(page).toHaveURL(/inventory/);
   await expect(page).toHaveTitle('Swag Labs');
 
@@ -19,12 +19,12 @@ async function verifyCartLandingDetails(page: Page) {
 test('should add Sauce Labs Backpack to cart', async ({ page }, testInfo) => {
   const loginPage = new LoginPage(page);
   const inventoryPage = new InventoryPage(page);
-  const cartAssertions = new CartAssertions(inventoryPage);
+  const inventoryAssertions = new InventoryAssertions(inventoryPage);
   
   await loginPage.login('standard_user', 'secret_sauce');
 
   // Verify URL has changed
-  await verifyCartLandingDetails(page);
+  await verifyInventoryLandingDetails(page);
 
   // Add Sauce Labs Backpack to cart
   await inventoryPage.addItemToCart('sauce-labs-backpack');
@@ -36,9 +36,9 @@ test('should add Sauce Labs Backpack to cart', async ({ page }, testInfo) => {
   });
 
   // Verify cart state using assertions class
-  await cartAssertions.verifyCartBadgeCount('1');
-  await cartAssertions.verifyCartLinkContainsCount('1');
-  await cartAssertions.verifyRemoveButtonText('sauce-labs-backpack', 'Remove');
+  await inventoryAssertions.verifyCartBadgeCount('1');
+  await inventoryAssertions.verifyCartLinkContainsCount('1');
+  await inventoryAssertions.verifyRemoveButtonText('sauce-labs-backpack', 'Remove');
 
   // Attach screenshot to report
   await testInfo.attach('cart-page-after-adding-backpack-final', {
@@ -50,11 +50,11 @@ test('should add Sauce Labs Backpack to cart', async ({ page }, testInfo) => {
 test('should add Sauce Labs Backpack and Bike Light to cart', async ({ page }, testInfo) => {
   const loginPage = new LoginPage(page);
   const inventoryPage = new InventoryPage(page);
-  const cartAssertions = new CartAssertions(inventoryPage);
+  const inventoryAssertions = new InventoryAssertions(inventoryPage);
   
   await loginPage.login('standard_user', 'secret_sauce');
 
-  await verifyCartLandingDetails(page);
+  await verifyInventoryLandingDetails(page);
 
   // Add Sauce Labs Backpack to cart
   await inventoryPage.addItemToCart('sauce-labs-backpack');
@@ -69,10 +69,10 @@ test('should add Sauce Labs Backpack and Bike Light to cart', async ({ page }, t
   await inventoryPage.addItemToCart('sauce-labs-bike-light');
 
   // Verify cart state using assertions class
-  await cartAssertions.verifyCartBadgeCount('2');
-  await cartAssertions.verifyCartLinkContainsCount('2');
-  await cartAssertions.verifyRemoveButtonText('sauce-labs-backpack', 'Remove');
-  await cartAssertions.verifyRemoveButtonText('sauce-labs-bike-light', 'Remove');
+  await inventoryAssertions.verifyCartBadgeCount('2');
+  await inventoryAssertions.verifyCartLinkContainsCount('2');
+  await inventoryAssertions.verifyRemoveButtonText('sauce-labs-backpack', 'Remove');
+  await inventoryAssertions.verifyRemoveButtonText('sauce-labs-bike-light', 'Remove');
 
   // Attach screenshot to report
   await testInfo.attach('cart-page-after-adding-bike-light', {

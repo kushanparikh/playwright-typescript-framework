@@ -1,37 +1,37 @@
 import { expect } from '@playwright/test';
-import CartPage from '../pages/inventoryPage';
+import InventoryPage from '../pages/inventoryPage';
 
 type FilterType = 'az' | 'za' | 'lohi' | 'hilo';
 
 export default class CartAssertions {
-    private cartPage: CartPage;
+    private inventoryPage: InventoryPage;
 
-    constructor(cartPage: CartPage) {
-        this.cartPage = cartPage;
+    constructor(inventoryPage: InventoryPage) {
+        this.inventoryPage = inventoryPage;
     }
 
     async verifyCartBadgeCount(expectedCount: string) {
-        await expect(this.cartPage.getCartBadge()).toHaveText(expectedCount);
+        await expect(this.inventoryPage.getCartBadge()).toHaveText(expectedCount);
     }
 
     async verifyCartLinkContainsCount(expectedCount: string) {
-        await expect(this.cartPage.getCartLink()).toContainText(expectedCount);
+        await expect(this.inventoryPage.getCartLink()).toContainText(expectedCount);
     }
 
     async verifyRemoveButtonText(itemTestId: string, expectedText: string) {
-        await expect(this.cartPage.getRemoveButton(itemTestId)).toHaveText(expectedText);
+        await expect(this.inventoryPage.getRemoveButton(itemTestId)).toHaveText(expectedText);
     }
 
     async verifyAddToCartButtonExists(itemTestId: string) {
-        await expect(this.cartPage.getAddToCartButton(itemTestId)).toBeVisible();
+        await expect(this.inventoryPage.getAddToCartButton(itemTestId)).toBeVisible();
     }
 
     async verifyRemoveButtonExists(itemTestId: string) {
-        await expect(this.cartPage.getRemoveButton(itemTestId)).toBeVisible();
+        await expect(this.inventoryPage.getRemoveButton(itemTestId)).toBeVisible();
     }
 
     async verifyCartBadgeNotVisible() {
-        await expect(this.cartPage.getCartBadge()).not.toBeVisible();
+        await expect(this.inventoryPage.getCartBadge()).not.toBeVisible();
     }
 
     async verifyProductsSorted(sortOrder: FilterType) {
@@ -51,7 +51,7 @@ export default class CartAssertions {
 
     private async verifyProductsSortedByPrice(sortOrder: 'lohi' | 'hilo') {
         // Get all product price elements
-        const priceElements = await this.cartPage.getItemPriceLocator().allTextContents();
+        const priceElements = await this.inventoryPage.getItemPriceLocator().allTextContents();
         // Extract prices from elements
         const prices = await Promise.all(priceElements.map(async (priceElement) => {
             return parseFloat(priceElement?.replace('$', '') || '0');
@@ -71,7 +71,7 @@ export default class CartAssertions {
 
     private async verifyProductsSortedByAlphabet(sortOrder: 'az' | 'za') {
         // Get all product name elements
-        const nameElements = await this.cartPage.getItemNameLocator().allTextContents();
+        const nameElements = await this.inventoryPage.getItemNameLocator().allTextContents();
 
         if (sortOrder === 'az') {
             // Create a sorted list of names to compare
