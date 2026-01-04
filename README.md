@@ -65,7 +65,6 @@ npx playwright show-report
 ```
 playwright-typescript-framework/
 ├── tests/
-│   ├── fixtures/              # Test fixtures and data
 │   ├── login.spec.ts          # Login functionality tests
 │   ├── inventory.spec.ts      # Shopping cart tests
 │   └── filter.spec.ts         # Product filtering tests
