@@ -8,8 +8,29 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 ### Planned
-- Custom test fixtures for login automation
 - CI/CD pipeline with GitHub Actions
+
+---
+
+## [0.4.0] - 2025-01-04
+### Added
+- Custom test fixtures system (`tests/fixtures/baseTest.ts`)
+  - `loginPage`: Pre-configured LoginPage instance
+  - `inventoryPage`: Pre-configured InventoryPage instance
+  - `loginAssertions`: Pre-configured LoginAssertions instance
+  - `inventoryAssertions`: Pre-configured InventoryAssertions instance
+- `LoginAssertions` class for login-specific verification methods
+- Enhanced page object methods:
+  - `getURL()` and `getTitle()` methods in page classes
+  - `getDisplayedErrorMessage()` in LoginPage
+- Refactored all test files to use custom fixtures pattern
+- Improved test code maintainability with dependency injection
+
+### Changed
+- Migrated from manual page object instantiation to fixture-based approach
+- Updated all test imports to use `./fixtures/baseTest`
+- Centralized test setup and teardown logic
+- Enhanced assertion methods with better error handling
 
 ---
 

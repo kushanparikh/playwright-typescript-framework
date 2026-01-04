@@ -88,8 +88,18 @@ The framework follows the Page Object Model pattern for maintainable test code:
 - **LoginPage**: Handles login functionality with username/password fields
 - **InventoryPage**: Manages product inventory, cart operations, and filtering
 
+### Custom Fixtures
+Enhanced test setup using Playwright's custom fixtures for cleaner test code:
+
+- **baseTest.ts**: Central fixture configuration providing:
+  - `loginPage`: Pre-configured LoginPage instance
+  - `inventoryPage`: Pre-configured InventoryPage instance  
+  - `loginAssertions`: Pre-configured LoginAssertions instance
+  - `inventoryAssertions`: Pre-configured InventoryAssertions instance
+
 ### Custom Assertions
 Dedicated assertion classes provide reusable validation methods:
+- **LoginAssertions**: Validates login page state and error messages
 - **InventoryAssertions**: Validates cart state, product sorting, and UI elements
 
 ### Test Coverage
@@ -150,7 +160,31 @@ npx playwright test --headed
 
 1. **Separation of Concerns**: Page objects, assertions, and tests are organized separately
 2. **Reusable Components**: Common functionality is abstracted into page classes
-3. **TypeScript Benefits**: Strong typing for better code reliability
-4. **Comprehensive Reporting**: Screenshots and traces for failed tests
-5. **Cross-Browser Testing**: Automated testing across multiple browsers
-6. **CI/CD Ready**: Configuration optimized for continuous integration environments
+3. **Custom Fixtures**: Centralized test setup with dependency injection pattern
+4. **TypeScript Benefits**: Strong typing for better code reliability
+5. **Comprehensive Reporting**: Screenshots and traces for failed tests
+6. **Cross-Browser Testing**: Automated testing across multiple browsers
+7. **CI/CD Ready**: Configuration optimized for continuous integration environments
+
+## Usage Examples
+
+### Using Custom Fixtures
+```typescript
+import { test, expect } from './fixtures/baseTest';
+
+test('example test with fixtures', async ({ page, loginPage, inventoryAssertions }) => {
+  await loginPage.login('standard_user', 'secret_sauce');
+  await inventoryAssertions.verifyInventoryLandingDetails();
+});
+```
+
+### Traditional Approach (for comparison)
+```typescript
+import { test, expect } from '@playwright/test';
+import LoginPage from '../pages/loginPage';
+
+test('example test without fixtures', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  await loginPage.login('standard_user', 'secret_sauce');
+});
+```
