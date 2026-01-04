@@ -15,7 +15,7 @@ export default class LoginPage {
     }
 
     // Getters
-    getURL(): String {
+    getURL(): string {
         return this.page.url();
     }
 

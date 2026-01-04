@@ -24,7 +24,7 @@ export default class InventoryPage {
     }
 
     // Getters - Return element states without assertions
-    getURL(): String {
+    getURL(): string {
         return this.page.url();
     }
 

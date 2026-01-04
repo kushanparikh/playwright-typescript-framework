@@ -2,7 +2,7 @@ import { test, expect } from './fixtures/baseTest';
 
 test.beforeEach(async ({ page, loginAssertions }) => {
   await page.goto('/');
-  loginAssertions.verifyLoginLandingDetails();
+  await loginAssertions.verifyLoginLandingDetails();
 });
 
 test.describe('Filter products', () => {
