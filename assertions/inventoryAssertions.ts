@@ -1,4 +1,4 @@
-import { expect } from '@playwright/test';
+import { expect, Page } from '@playwright/test';
 import InventoryPage from '../pages/inventoryPage';
 
 type FilterType = 'az' | 'za' | 'lohi' | 'hilo';
@@ -8,6 +8,14 @@ export default class InventoryAssertions {
 
     constructor(inventoryPage: InventoryPage) {
         this.inventoryPage = inventoryPage;
+    }
+
+    async verifyInventoryLandingDetails() {
+        await expect(this.inventoryPage.getURL()).toContain('/inventory');
+        await expect(this.inventoryPage.getTitle()).toContain('Swag Labs');
+    
+      // Verify secondary title "Products"
+      await expect(this.inventoryPage.getSecondaryTitle()).toBeVisible();
     }
 
     async verifyCartBadgeCount(expectedCount: string) {

@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import LoginPage from '../pages/loginPage';
 import InventoryPage from '../pages/inventoryPage';
 import InventoryAssertions from '../assertions/inventoryAssertions';
@@ -8,14 +8,6 @@ test.beforeEach(async ({ page }) => {
     await expect(page).toHaveTitle('Swag Labs');
 });
 
-async function verifyInventoryLandingDetails(page: Page) {
-  await expect(page).toHaveURL(/inventory/);
-  await expect(page).toHaveTitle('Swag Labs');
-
-  // Verify secondary title "Products"
-  await expect(page.getByText('Products')).toBeVisible();
-}
-
 test('should add Sauce Labs Backpack to cart', async ({ page }, testInfo) => {
   const loginPage = new LoginPage(page);
   const inventoryPage = new InventoryPage(page);
@@ -24,7 +16,7 @@ test('should add Sauce Labs Backpack to cart', async ({ page }, testInfo) => {
   await loginPage.login('standard_user', 'secret_sauce');
 
   // Verify URL has changed
-  await verifyInventoryLandingDetails(page);
+  await inventoryAssertions.verifyInventoryLandingDetails();
 
   // Add Sauce Labs Backpack to cart
   await inventoryPage.addItemToCart('sauce-labs-backpack');
@@ -47,14 +39,14 @@ test('should add Sauce Labs Backpack to cart', async ({ page }, testInfo) => {
   });
 });
 
-test('should add Sauce Labs Backpack and Bike Light to cart', async ({ page }, testInfo) => {
+test('should add Sauce Labs Backpack and Bike Light to cart', async ({ page}, testInfo) => {
   const loginPage = new LoginPage(page);
   const inventoryPage = new InventoryPage(page);
   const inventoryAssertions = new InventoryAssertions(inventoryPage);
-  
+
   await loginPage.login('standard_user', 'secret_sauce');
 
-  await verifyInventoryLandingDetails(page);
+  await inventoryAssertions.verifyInventoryLandingDetails();
 
   // Add Sauce Labs Backpack to cart
   await inventoryPage.addItemToCart('sauce-labs-backpack');

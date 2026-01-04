@@ -24,6 +24,17 @@ export default class InventoryPage {
     }
 
     // Getters - Return element states without assertions
+    getURL(): String {
+        return this.page.url();
+    }
+
+    getTitle(): Promise<String> {
+        return this.page.title();
+    }
+
+    getSecondaryTitle(): Locator {
+        return this.page.getByText('Products')
+    }
     getCartBadge(): Locator {
         return this.page.locator('[data-test="shopping-cart-badge"]');
     }
