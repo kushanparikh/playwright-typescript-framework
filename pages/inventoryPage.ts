@@ -18,7 +18,7 @@ export default class InventoryPage {
         await this.page.locator(`[data-test="remove-${itemTestId}"]`).click();
     }
 
-    async applyPriceFilter(filterType: FilterType) {
+    async applyFilter(filterType: FilterType) {
         console.log(`Applying filter: ${filterType}`);
         await this.page.locator('[data-test="product-sort-container"]')
         .selectOption({value: filterType});

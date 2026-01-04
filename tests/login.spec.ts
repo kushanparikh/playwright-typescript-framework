@@ -23,62 +23,64 @@ test('should login successfully with valid credentials', async ({ page }, testIn
   });
 });
 
-test('should show error for locked out user', async ({ page }, testInfo) => {
-  // Use LoginPage to perform login
-  const loginPage = new LoginPage(page);
-  loginPage.login('locked_out_user', 'secret_sauce')
+test.describe('Login with invalid credentials', () => {
+  test('should show error for locked out user', async ({ page }, testInfo) => {
+    // Use LoginPage to perform login
+    const loginPage = new LoginPage(page);
+    loginPage.login('locked_out_user', 'secret_sauce')
 
-  // Verify error message is displayed
-  await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Sorry, this user has been locked out.');
+    // Verify error message is displayed
+    await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Sorry, this user has been locked out.');
 
-  // Attach screenshot to report
-  await testInfo.attach('error-locked-out-user', {
-    body: await page.screenshot(),
-    contentType: 'image/png',
+    // Attach screenshot to report
+    await testInfo.attach('error-locked-out-user', {
+      body: await page.screenshot(),
+      contentType: 'image/png',
+    });
   });
-});
 
-test('should show error with non-existent username', async ({ page }, testInfo) => {
-  // Use LoginPage to perform login
-  const loginPage = new LoginPage(page);
-  loginPage.login('invalid_user', 'secret_sauce')
+  test('should show error with non-existent username', async ({ page }, testInfo) => {
+    // Use LoginPage to perform login
+    const loginPage = new LoginPage(page);
+    loginPage.login('invalid_user', 'secret_sauce')
 
-  //Verify error message is displayed
-  await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Username and password do not match any user in this service');
+    //Verify error message is displayed
+    await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Username and password do not match any user in this service');
 
-  // Attach screenshot to report
-  await testInfo.attach('error-non-existent-username', {
-    body: await page.screenshot(),
-    contentType: 'image/png',
+    // Attach screenshot to report
+    await testInfo.attach('error-non-existent-username', {
+      body: await page.screenshot(),
+      contentType: 'image/png',
+    });
   });
-});
 
-test('should show error with empty password', async ({ page }, testInfo) => {
-  // Use LoginPage to perform login
-  const loginPage = new LoginPage(page);
-  loginPage.login('standard_user', '');
+  test('should show error with empty password', async ({ page }, testInfo) => {
+    // Use LoginPage to perform login
+    const loginPage = new LoginPage(page);
+    loginPage.login('standard_user', '');
 
-  //Verify error message is displayed
-  await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Password is required');
+    //Verify error message is displayed
+    await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Password is required');
 
-  // Attach screenshot to report
-  await testInfo.attach('error-empty-password', {
-    body: await page.screenshot(),
-    contentType: 'image/png',
+    // Attach screenshot to report
+    await testInfo.attach('error-empty-password', {
+      body: await page.screenshot(),
+      contentType: 'image/png',
+    });
   });
-});
 
-test('should show error with empty username', async ({ page }, testInfo) => {
-  // Use LoginPage to perform login
-  const loginPage = new LoginPage(page);
-  loginPage.login('', 'secret_sauce');
-  
-  //Verify error message is displayed
-  await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Username is required');
+  test('should show error with empty username', async ({ page }, testInfo) => {
+    // Use LoginPage to perform login
+    const loginPage = new LoginPage(page);
+    loginPage.login('', 'secret_sauce');
 
-  // Attach screenshot to report
-  await testInfo.attach('error-empty-username', {
-    body: await page.screenshot(),
-    contentType: 'image/png',
+    //Verify error message is displayed
+    await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Username is required');
+
+    // Attach screenshot to report
+    await testInfo.attach('error-empty-username', {
+      body: await page.screenshot(),
+      contentType: 'image/png',
+    });
   });
 });
