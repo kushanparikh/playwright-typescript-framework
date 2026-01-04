@@ -1,8 +1,8 @@
 import { test, expect } from './fixtures/baseTest';
 
-test.beforeEach(async ({ page }) => {
+test.beforeEach(async ({ page, loginAssertions }) => {
   await page.goto('/');
-  await expect(page).toHaveTitle('Swag Labs');
+  loginAssertions.verifyLoginLandingDetails();
 });
 
 test.describe('Filter products', () => {
