@@ -1,17 +1,11 @@
-import { test, expect } from '@playwright/test';
-import LoginPage from '../pages/loginPage';
-import InventoryPage from '../pages/inventoryPage';
-import InventoryAssertions from '../assertions/inventoryAssertions';
+import { test, expect } from './fixtures/baseTest';
 
 test.beforeEach(async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveTitle('Swag Labs');
 });
 
-test('should add Sauce Labs Backpack to cart', async ({ page }, testInfo) => {
-  const loginPage = new LoginPage(page);
-  const inventoryPage = new InventoryPage(page);
-  const inventoryAssertions = new InventoryAssertions(inventoryPage);
+test('should add Sauce Labs Backpack to cart', async ({ page, loginPage, inventoryPage, inventoryAssertions }, testInfo) => {
   
   await loginPage.login('standard_user', 'secret_sauce');
 
@@ -39,10 +33,7 @@ test('should add Sauce Labs Backpack to cart', async ({ page }, testInfo) => {
   });
 });
 
-test('should add Sauce Labs Backpack and Bike Light to cart', async ({ page}, testInfo) => {
-  const loginPage = new LoginPage(page);
-  const inventoryPage = new InventoryPage(page);
-  const inventoryAssertions = new InventoryAssertions(inventoryPage);
+test('should add Sauce Labs Backpack and Bike Light to cart', async ({ page, loginPage, inventoryPage, inventoryAssertions }, testInfo) => {
 
   await loginPage.login('standard_user', 'secret_sauce');
 

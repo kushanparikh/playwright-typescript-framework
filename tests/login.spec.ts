@@ -1,5 +1,4 @@
-import { test, expect } from '@playwright/test';
-import LoginPage from '../pages/loginPage';
+import { test, expect } from './fixtures/baseTest';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/');
@@ -8,13 +7,12 @@ test.beforeEach(async ({ page }) => {
   await expect(page).toHaveTitle('Swag Labs');
 });
 
-test('should login successfully with valid credentials', async ({ page }, testInfo) => {
+test('should login successfully with valid credentials', async ({ page, loginPage, inventoryAssertions }, testInfo) => {
   // Use LoginPage to perform login
-  const loginPage = new LoginPage(page);
   await loginPage.login('standard_user', 'secret_sauce')
 
   // Verify URL has changed
-  await expect(page).toHaveURL(/inventory/);
+  await inventoryAssertions.verifyInventoryLandingDetails();
 
   // Attach screenshot to report
   await testInfo.attach('inventory-page-after-login', {
@@ -24,9 +22,8 @@ test('should login successfully with valid credentials', async ({ page }, testIn
 });
 
 test.describe('Login with invalid credentials', () => {
-  test('should show error for locked out user', async ({ page }, testInfo) => {
+  test('should show error for locked out user', async ({ page, loginPage }, testInfo) => {
     // Use LoginPage to perform login
-    const loginPage = new LoginPage(page);
     await loginPage.login('locked_out_user', 'secret_sauce')
 
     // Verify error message is displayed
@@ -39,9 +36,8 @@ test.describe('Login with invalid credentials', () => {
     });
   });
 
-  test('should show error with non-existent username', async ({ page }, testInfo) => {
+  test('should show error with non-existent username', async ({ page, loginPage }, testInfo) => {
     // Use LoginPage to perform login
-    const loginPage = new LoginPage(page);
     await loginPage.login('invalid_user', 'secret_sauce')
 
     //Verify error message is displayed
@@ -54,9 +50,8 @@ test.describe('Login with invalid credentials', () => {
     });
   });
 
-  test('should show error with empty password', async ({ page }, testInfo) => {
+  test('should show error with empty password', async ({ page, loginPage }, testInfo) => {
     // Use LoginPage to perform login
-    const loginPage = new LoginPage(page);
     await loginPage.login('standard_user', '');
 
     //Verify error message is displayed
@@ -69,9 +64,8 @@ test.describe('Login with invalid credentials', () => {
     });
   });
 
-  test('should show error with empty username', async ({ page }, testInfo) => {
+  test('should show error with empty username', async ({ page, loginPage }, testInfo) => {
     // Use LoginPage to perform login
-    const loginPage = new LoginPage(page);
     await loginPage.login('', 'secret_sauce');
 
     //Verify error message is displayed

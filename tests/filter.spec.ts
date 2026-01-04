@@ -1,7 +1,4 @@
-import { test, expect } from '@playwright/test';
-import LoginPage from '../pages/loginPage';
-import InventoryPage from '../pages/inventoryPage';
-import InventoryAssertions from '../assertions/inventoryAssertions';
+import { test, expect } from './fixtures/baseTest';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/');
@@ -9,18 +6,11 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe('Filter products', () => {
-  test('filter products by item name by reverse order', async ({ page }, testInfo) => {
-    const loginPage = new LoginPage(page);
-    const inventoryPage = new InventoryPage(page);
-    const inventoryAssertions = new InventoryAssertions(inventoryPage);
+  test('filter products by item name by reverse order', async ({ page, loginPage, inventoryPage, inventoryAssertions }, testInfo) => {
     // Login first
     await loginPage.login('standard_user', 'secret_sauce');
 
-    await expect(page).toHaveURL(/inventory/);
-    await expect(page).toHaveTitle('Swag Labs');
-
-    // Verify secondary title "Products"
-    await expect(page.getByText('Products')).toBeVisible();
+    await inventoryAssertions.verifyInventoryLandingDetails();
 
     // Attach screenshot to report
     await testInfo.attach('inventory-page-after-login', {
@@ -41,18 +31,11 @@ test.describe('Filter products', () => {
     await inventoryAssertions.verifyProductsSorted('za');
   });
 
-  test('filter products by price - low to high', async ({ page }, testInfo) => {
-    const loginPage = new LoginPage(page);
-    const inventoryPage = new InventoryPage(page);
-    const inventoryAssertions = new InventoryAssertions(inventoryPage);
+  test('filter products by price - low to high', async ({ page, loginPage, inventoryPage, inventoryAssertions }, testInfo) => {
     // Login first
     await loginPage.login('standard_user', 'secret_sauce');
 
-    await expect(page).toHaveURL(/inventory/);
-    await expect(page).toHaveTitle('Swag Labs');
-
-    // Verify secondary title "Products"
-    await expect(page.getByText('Products')).toBeVisible();
+    await inventoryAssertions.verifyInventoryLandingDetails();
 
     // Attach screenshot to report
     await testInfo.attach('inventory-page-after-login', {
@@ -73,18 +56,11 @@ test.describe('Filter products', () => {
     await inventoryAssertions.verifyProductsSorted('lohi');
   });
 
-  test('filter products by price - high to low', async ({ page }, testInfo) => {
-    const loginPage = new LoginPage(page);
-    const inventoryPage = new InventoryPage(page);
-    const inventoryAssertions = new InventoryAssertions(inventoryPage);
+  test('filter products by price - high to low', async ({ page, loginPage, inventoryPage, inventoryAssertions }, testInfo) => {
     // Login first
     await loginPage.login('standard_user', 'secret_sauce');
 
-    await expect(page).toHaveURL(/inventory/);
-    await expect(page).toHaveTitle('Swag Labs');
-
-    // Verify secondary title "Products"
-    await expect(page.getByText('Products')).toBeVisible();
+    await inventoryAssertions.verifyInventoryLandingDetails();
 
     // Attach screenshot to report
     await testInfo.attach('inventory-page-after-login', {
