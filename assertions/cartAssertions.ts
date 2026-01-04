@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import CartPage from '../pages/cartPage';
+import CartPage from '../pages/inventoryPage';
 
 export default class CartAssertions {
     private cartPage: CartPage;

@@ -1,6 +1,6 @@
 import { test, expect, Page } from '@playwright/test';
 import LoginPage from '../pages/loginPage';
-import CartPage from '../pages/cartPage';
+import InventoryPage from '../pages/inventoryPage';
 import CartAssertions from '../assertions/cartAssertions';
 
 test.beforeEach(async ({ page }) => {
@@ -18,8 +18,8 @@ async function verifyCartLandingDetails(page: Page) {
 
 test('should add Sauce Labs Backpack to cart', async ({ page }, testInfo) => {
   const loginPage = new LoginPage(page);
-  const cartPage = new CartPage(page);
-  const cartAssertions = new CartAssertions(cartPage);
+  const inventoryPage = new InventoryPage(page);
+  const cartAssertions = new CartAssertions(inventoryPage);
   
   await loginPage.login('standard_user', 'secret_sauce');
 
@@ -27,7 +27,7 @@ test('should add Sauce Labs Backpack to cart', async ({ page }, testInfo) => {
   await verifyCartLandingDetails(page);
 
   // Add Sauce Labs Backpack to cart
-  await cartPage.addItemToCart('sauce-labs-backpack');
+  await inventoryPage.addItemToCart('sauce-labs-backpack');
 
   // Attach screenshot to report
   await testInfo.attach('cart-page-after-adding-backpack', {
@@ -49,15 +49,15 @@ test('should add Sauce Labs Backpack to cart', async ({ page }, testInfo) => {
 
 test('should add Sauce Labs Backpack and Bike Light to cart', async ({ page }, testInfo) => {
   const loginPage = new LoginPage(page);
-  const cartPage = new CartPage(page);
-  const cartAssertions = new CartAssertions(cartPage);
+  const inventoryPage = new InventoryPage(page);
+  const cartAssertions = new CartAssertions(inventoryPage);
   
   await loginPage.login('standard_user', 'secret_sauce');
 
   await verifyCartLandingDetails(page);
 
   // Add Sauce Labs Backpack to cart
-  await cartPage.addItemToCart('sauce-labs-backpack');
+  await inventoryPage.addItemToCart('sauce-labs-backpack');
 
   // Attach screenshot to report
   await testInfo.attach('cart-page-after-adding-backpack', {
@@ -66,7 +66,7 @@ test('should add Sauce Labs Backpack and Bike Light to cart', async ({ page }, t
   });
   
   // Add Sauce Labs Bike Light to cart
-  await cartPage.addItemToCart('sauce-labs-bike-light');
+  await inventoryPage.addItemToCart('sauce-labs-bike-light');
 
   // Verify cart state using assertions class
   await cartAssertions.verifyCartBadgeCount('2');

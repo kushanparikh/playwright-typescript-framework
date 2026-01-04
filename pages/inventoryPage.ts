@@ -1,6 +1,6 @@
 import { Page, Locator } from '@playwright/test';
 
-export default class CartPage {
+export default class InventoryPage {
     private page: Page;
 
     constructor(page: Page) {
@@ -14,6 +14,18 @@ export default class CartPage {
 
     async removeItemFromCart(itemTestId: string) {
         await this.page.locator(`[data-test="remove-${itemTestId}"]`).click();
+    }
+
+    async applyPriceFilter(filterType: string) {
+        // TODO - Implementation would go here
+        // Example: click on the sort dropdown and select the filter
+        await this.page.locator('[data-test="product_sort_container"]').click();
+        await this.page.locator(`text=${filterType}`).click();
+    }
+
+    async verifyProductsSortedByPrice(sortOrder: string) {
+        // TODO - Implementation would go here
+        // Example: get all product prices and verify they are in the correct order
     }
 
     // Getters - Return element states without assertions
