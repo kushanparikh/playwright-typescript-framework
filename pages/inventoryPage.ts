@@ -28,13 +28,14 @@ export default class InventoryPage {
         return this.page.url();
     }
 
-    getTitle(): Promise<String> {
-        return this.page.title();
+    async getTitle(): Promise<string> {
+        return await this.page.title();
     }
 
     getSecondaryTitle(): Locator {
         return this.page.getByText('Products')
     }
+
     getCartBadge(): Locator {
         return this.page.locator('[data-test="shopping-cart-badge"]');
     }

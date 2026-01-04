@@ -12,7 +12,7 @@ export default class InventoryAssertions {
 
     async verifyInventoryLandingDetails() {
         await expect(this.inventoryPage.getURL()).toContain('/inventory');
-        await expect(this.inventoryPage.getTitle()).toContain('Swag Labs');
+        await expect(await this.inventoryPage.getTitle()).toContain('Swag Labs');
     
       // Verify secondary title "Products"
       await expect(this.inventoryPage.getSecondaryTitle()).toBeVisible();

@@ -9,10 +9,10 @@ export default class LoginAssertions {
     }
 
     async verifyLoginLandingDetails() {
-        await expect(this.loginPage.getTitle()).toContain('Swag Labs');
+        await expect(await this.loginPage.getTitle()).toContain('Swag Labs');
     }
 
     async verifyDisplayedErrorMessage(message: string) {
-        await expect(this.loginPage.getDisplayedErrorMessage()).toContain(message);
+        await expect(await this.loginPage.getDisplayedErrorMessage()).toContain(message);
     }
 }

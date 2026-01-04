@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 
 export default class LoginPage {
     private page: Page;
@@ -19,11 +19,11 @@ export default class LoginPage {
         return this.page.url();
     }
 
-    getTitle(): Promise<String> {
-        return this.page.title();
+    async getTitle(): Promise<string> {
+        return await this.page.title();
     }
     
-    getDisplayedErrorMessage() {
-        return this.page.locator('[data-test="error"]').textContent();
+    async getDisplayedErrorMessage(): Promise<string> {
+        return (await this.page.locator('[data-test="error"]').textContent()) || '';
     }
 }
