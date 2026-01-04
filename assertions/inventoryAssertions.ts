@@ -37,7 +37,6 @@ export default class InventoryAssertions {
     async verifyProductsSorted(sortOrder: FilterType) {
         // TODO - Implementation would go here
         // Example: get all product prices and verify they are in the correct order
-        console.log(`Verifying products are sorted by price in ${sortOrder} order`);
         if (sortOrder === 'lohi') {
             await this.verifyProductsSortedByPrice('lohi');
         } else if (sortOrder === 'hilo') {

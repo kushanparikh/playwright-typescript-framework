@@ -19,7 +19,6 @@ export default class InventoryPage {
     }
 
     async applyFilter(filterType: FilterType) {
-        console.log(`Applying filter: ${filterType}`);
         await this.page.locator('[data-test="product-sort-container"]')
         .selectOption({value: filterType});
     }
