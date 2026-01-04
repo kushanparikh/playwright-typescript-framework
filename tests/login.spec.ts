@@ -11,7 +11,7 @@ test.beforeEach(async ({ page }) => {
 test('should login successfully with valid credentials', async ({ page }, testInfo) => {
   // Use LoginPage to perform login
   const loginPage = new LoginPage(page);
-  loginPage.login('standard_user', 'secret_sauce')
+  await loginPage.login('standard_user', 'secret_sauce')
 
   // Verify URL has changed
   await expect(page).toHaveURL(/inventory/);
@@ -27,7 +27,7 @@ test.describe('Login with invalid credentials', () => {
   test('should show error for locked out user', async ({ page }, testInfo) => {
     // Use LoginPage to perform login
     const loginPage = new LoginPage(page);
-    loginPage.login('locked_out_user', 'secret_sauce')
+    await loginPage.login('locked_out_user', 'secret_sauce')
 
     // Verify error message is displayed
     await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Sorry, this user has been locked out.');
@@ -42,7 +42,7 @@ test.describe('Login with invalid credentials', () => {
   test('should show error with non-existent username', async ({ page }, testInfo) => {
     // Use LoginPage to perform login
     const loginPage = new LoginPage(page);
-    loginPage.login('invalid_user', 'secret_sauce')
+    await loginPage.login('invalid_user', 'secret_sauce')
 
     //Verify error message is displayed
     await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Username and password do not match any user in this service');
@@ -57,7 +57,7 @@ test.describe('Login with invalid credentials', () => {
   test('should show error with empty password', async ({ page }, testInfo) => {
     // Use LoginPage to perform login
     const loginPage = new LoginPage(page);
-    loginPage.login('standard_user', '');
+    await loginPage.login('standard_user', '');
 
     //Verify error message is displayed
     await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Password is required');
@@ -72,7 +72,7 @@ test.describe('Login with invalid credentials', () => {
   test('should show error with empty username', async ({ page }, testInfo) => {
     // Use LoginPage to perform login
     const loginPage = new LoginPage(page);
-    loginPage.login('', 'secret_sauce');
+    await loginPage.login('', 'secret_sauce');
 
     //Verify error message is displayed
     await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Username is required');

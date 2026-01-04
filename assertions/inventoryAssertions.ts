@@ -3,7 +3,7 @@ import InventoryPage from '../pages/inventoryPage';
 
 type FilterType = 'az' | 'za' | 'lohi' | 'hilo';
 
-export default class CartAssertions {
+export default class InventoryAssertions {
     private inventoryPage: InventoryPage;
 
     constructor(inventoryPage: InventoryPage) {
