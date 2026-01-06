@@ -23,6 +23,10 @@ export default class InventoryPage {
         .selectOption({value: filterType});
     }
 
+    async clickCartLink() {
+        await this.page.locator('.shopping_cart_link').click();
+    }
+
     // Getters - Return element states without assertions
     getURL(): string {
         return this.page.url();
