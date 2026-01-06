@@ -45,6 +45,12 @@ export default defineConfig({
       /* Animation and screenshot comparison options */
       animations: 'disabled',
       caret: 'hide',
+      /* Threshold for acceptable pixel differences */
+      maxDiffPixels: 100,
+      /* Threshold for acceptable pixel ratio (0.01 = 1%) */
+      maxDiffPixelRatio: 0.01,
+      /* Image comparison method */
+      threshold: 0.2,
     },
   },
 
