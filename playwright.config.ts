@@ -31,9 +31,27 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     
-    /* Execution evidance */
-    screenshot: 'only-on-failure',
+    /* Execution evidence */
+    screenshot: 'on',
     // video: 'on',
+  },
+
+  /* Global setup for visual regression testing */
+  expect: {
+    /* Configure timeouts for assertions */
+    timeout: 10000,
+    /* Configure visual regression options */
+    toHaveScreenshot: {
+      /* Animation and screenshot comparison options */
+      animations: 'disabled',
+      caret: 'hide',
+      /* Threshold for acceptable pixel differences */
+      maxDiffPixels: 100,
+      /* Threshold for acceptable pixel ratio (0.01 = 1%) */
+      maxDiffPixelRatio: 0.01,
+      /* Image comparison method */
+      threshold: 0.2,
+    },
   },
 
   /* Configure projects for major browsers */
