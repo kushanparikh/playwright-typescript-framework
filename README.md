@@ -188,3 +188,45 @@ test('example test without fixtures', async ({ page }) => {
   await loginPage.login('standard_user', 'secret_sauce');
 });
 ```
+## Test Metrics
+
+| Metric | Count |
+|--------|-------|
+| Total Tests | 16 |
+| Test Files | 5 |
+| Page Objects | 2 |
+| Assertion Classes | 2 |
+| CI/CD Pipelines | 1 |
+| Browsers Tested | 3 |
+
+## Technology Stack
+
+| Category | Technology |
+|----------|------------|
+| Framework | Playwright 1.57.0 |
+| Language | TypeScript 5.x |
+| CI/CD | GitHub Actions |
+| Accessibility | @axe-core/playwright |
+| Version Control | Git + GitHub |
+
+## Key Features
+
+✅ **Modern Patterns**: Page Object Model, Custom Fixtures, Assertion Classes
+✅ **Accessibility Testing**: WCAG 2.1 Level A & AA compliance validation
+✅ **Visual Regression**: Automated screenshot comparison
+✅ **CI/CD Integration**: GitHub Actions with cross-browser matrix
+✅ **TypeScript**: Fully typed with strict configuration
+✅ **Comprehensive Reporting**: HTML reports with screenshots and traces
+
+## Skills Demonstrated
+
+- Modern test automation frameworks (Playwright)
+- TypeScript expertise
+- Page Object Model pattern
+- Custom fixture creation
+- Accessibility compliance testing (WCAG 2.1)
+- Visual regression testing
+- CI/CD pipeline configuration
+- Cross-browser testing
+- Git version control
+- Technical documentation
