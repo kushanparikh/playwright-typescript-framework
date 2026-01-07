@@ -33,17 +33,17 @@ async function checkAccessibility(page: Page, pageName: string) {
     return accessibilityScanResults
 }
 
-test.describe('Accessibility Tests', () => {
+test.describe('Accessibility Tests - WCAG 2.1 Level AA standards', () => {
     test.beforeEach(async ({page}) => {
         await page.goto('/')
     })
 
-    test('Login Page should meet WCAG 2.1 Level AA standards', async ({page}) => {
+    test('Login Page accessibility validation', async ({page}) => {
         const result = await checkAccessibility(page, 'Login Page')
         expect(result.violations).toHaveLength(0)
     })
 
-    test('Inventory Page should meet WCAG 2.1 Level AA standards', async ({page, loginPage, inventoryAssertions}) => {
+    test('Inventory Page accessibility validation', async ({page, loginPage, inventoryAssertions}) => {
         await loginPage.login('standard_user', 'secret_sauce')
         await inventoryAssertions.verifyInventoryLandingDetails();
 
@@ -51,7 +51,7 @@ test.describe('Accessibility Tests', () => {
         expect(result.violations).toHaveLength(0)
     })
 
-    test('Cart Page should meet WCAG 2.1 Level AA standards', async ({page, loginPage, inventoryPage, inventoryAssertions}) => {
+    test('Cart Page accessibility validation', async ({page, loginPage, inventoryPage, inventoryAssertions}) => {
         await loginPage.login('standard_user', 'secret_sauce')
         await inventoryAssertions.verifyInventoryLandingDetails();
         await inventoryPage.addItemToCart('sauce-labs-backpack')
