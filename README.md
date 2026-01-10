@@ -89,6 +89,7 @@ playwright-typescript-framework/
 │   └── workflows/
 │       └── playwright.yml        # CI/CD pipeline configuration
 ├── playwright.config.ts          # Playwright configuration
+├── TODO.md                       # Planned test cases and enhancements roadmap
 ├── CHANGELOG.md                  # Version history
 ├── package.json                  # Project dependencies
 └── README.md                     # This file
@@ -336,8 +337,9 @@ test('example test without fixtures', async ({ page }) => {
 
 ## Additional Documentation
 
+- **[TODO.md](TODO.md)**: Planned test cases and framework enhancements roadmap
 - **[LEARNING_NOTES.md](docs/LEARNING_NOTES.md)**: Detailed learning documentation covering Playwright concepts, TypeScript patterns, and implementation insights
-- **[ARCHITECTURE.md](ARCHITECTURE.md)**: High-level architecture overview explaining design decisions and framework structure
+- **[ARCHITECTURE.md](docs/ARCHITECTURE.md)**: High-level architecture overview explaining design decisions and framework structure
 - **[CHANGELOG.md](CHANGELOG.md)**: Version history and feature evolution
 
 ## Portfolio Context

@@ -8,7 +8,59 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 ### Planned
-- CI/CD pipeline with GitHub Actions
+- Expand test coverage to 50-60 tests (see TODO.md)
+- Product Detail Page, Cart, Checkout flow tests
+- End-to-end purchase workflows
+
+---
+
+## [1.0.0-beta] - 2025-01-10
+### Summary
+Beta release with core framework architecture and testing patterns complete. Includes 16 tests demonstrating 5 testing capabilities with comprehensive documentation.
+
+### Added
+**Framework & Architecture**
+- Page Object Model (LoginPage, InventoryPage)
+- Custom Assertion Classes (LoginAssertions, InventoryAssertions)
+- Custom Fixtures for dependency injection (baseTest.ts)
+- TypeScript strict mode with custom types
+
+**Test Coverage (16 Tests)**
+- Login tests (5): Valid/invalid credentials, locked user, empty fields
+- Inventory tests (2): Add single/multiple items to cart
+- Filter tests (3): Sort by name (A-Z, Z-A) and price (Low-High, High-Low)
+- Visual regression tests (3): Login, inventory, cart pages
+- Accessibility tests (3): WCAG 2.1 Level A & AA compliance
+
+**Testing Capabilities**
+- Functional testing with Page Object Model
+- Accessibility testing (@axe-core/playwright, WCAG 2.1)
+- Visual regression testing (toHaveScreenshot)
+- Cross-browser testing (Chromium, Firefox, WebKit)
+- CI/CD integration (GitHub Actions)
+
+**CI/CD Pipeline**
+- GitHub Actions workflow with Windows runner
+- Cross-browser matrix execution
+- Artifact uploads (reports, screenshots, traces)
+- Retry strategy (2 retries on CI)
+
+**Documentation**
+- README.md: Project overview and capabilities
+- ARCHITECTURE.md: High-level design decisions
+- LEARNING_NOTES.md: Implementation insights and Playwright concepts
+- TODO.md: Test expansion roadmap (16→50-60 tests)
+
+### Known Limitations
+- Test coverage: 16/60 tests (27% of SauceDemo functionality)
+- Missing: Product detail, cart operations, checkout flow, menu, footer, E2E workflows
+- Only standard_user and locked_out_user tested (4 other user types pending)
+
+### Technical Decisions
+- Windows CI runner for consistent visual regression baselines
+- Role-based locators for accessibility-first approach
+- Separate assertion classes for Single Responsibility Principle
+- Custom fixtures for dependency injection pattern
 
 ---
 
