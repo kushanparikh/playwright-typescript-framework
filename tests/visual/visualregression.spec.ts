@@ -8,7 +8,7 @@ test.beforeEach(async ({ page, loginAssertions }) => {
 test.describe('Visual Regression Tests', () => {
     test('login page appearance', async ({ page }) => {
         // Visual Regression of login page
-        await expect.soft(page).toHaveScreenshot('login-page.png', { fullPage: true });
+        await expect(page).toHaveScreenshot('login-page.png', { fullPage: true });
     });
 
     test('inventory page appearance', async ({ page, loginPage, inventoryAssertions }) => {
@@ -17,7 +17,7 @@ test.describe('Visual Regression Tests', () => {
         // Verify inventory landing details
         await inventoryAssertions.verifyInventoryLandingDetails();
         // Visual Regression of inventory page
-        await expect.soft(page).toHaveScreenshot('inventory-page.png', { fullPage: true });
+        await expect(page).toHaveScreenshot('inventory-page.png', { fullPage: true });
     });
 
     test('cart with items appearance', async({page, loginPage, inventoryPage, inventoryAssertions}) => {
@@ -31,6 +31,6 @@ test.describe('Visual Regression Tests', () => {
         // Click on cart link
         await inventoryPage.clickCartLink();
         // Visual Regression of cart page
-        await expect.soft(page).toHaveScreenshot('cart-page-with-items.png', { fullPage: true });
+        await expect(page).toHaveScreenshot('cart-page-with-items.png', { fullPage: true });
     })
 });

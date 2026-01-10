@@ -40,7 +40,7 @@ test.describe('Accessibility Tests - WCAG 2.1 Level AA standards', () => {
 
     test('Login Page accessibility validation', async ({page}) => {
         const result = await checkAccessibility(page, 'Login Page')
-        expect.soft(result.violations).toHaveLength(0)
+        expect(result.violations).toHaveLength(0)
     })
 
     test('Inventory Page accessibility validation', async ({page, loginPage, inventoryAssertions}) => {
@@ -48,7 +48,7 @@ test.describe('Accessibility Tests - WCAG 2.1 Level AA standards', () => {
         await inventoryAssertions.verifyInventoryLandingDetails();
 
         const result = await checkAccessibility(page, 'Inventory Page')
-        expect.soft(result.violations).toHaveLength(0)
+        expect(result.violations).toHaveLength(0)
     })
 
     test('Cart Page accessibility validation', async ({page, loginPage, inventoryPage, inventoryAssertions}) => {
@@ -58,6 +58,6 @@ test.describe('Accessibility Tests - WCAG 2.1 Level AA standards', () => {
         await inventoryPage.clickCartLink()
 
         const result = await checkAccessibility(page, 'Cart Page')
-        expect.soft(result.violations).toHaveLength(0)
+        expect(result.violations).toHaveLength(0)
     })
 })
