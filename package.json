@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "description": "Automation Testing using Playwright with coding in TypeScript",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "playwright test",
+    "test:stable": "playwright test --grep-invert @flaky",
+    "test:functional": "playwright test tests/login.spec.ts tests/inventory.spec.ts tests/filter.spec.ts",
+    "test:visual": "playwright test tests/visual/",
+    "test:a11y": "playwright test tests/accessibility/"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kushanparikh/playwright-typescript-framework.git"
