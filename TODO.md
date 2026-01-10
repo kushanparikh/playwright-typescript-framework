@@ -66,10 +66,10 @@
 
 ## Current Test Coverage (Your Framework)
 
-### ✅ What You Have (16 tests)
+### ✅ What You Have (24 tests)
 | Category | Tests | Coverage |
 |----------|-------|----------|
-| Login | 5 | Valid login, locked user, invalid credentials, empty username, empty password |
+| Login | 13 | Valid login, locked user, invalid credentials, empty username, empty password, special user types (4), UI verification (3), keyboard navigation (1) |
 | Inventory | 2 | Add single item, add multiple items |
 | Filter | 3 | Sort A-Z, Z-A, Price Low-High, Price High-Low |
 | Visual Regression | 3 | Login, inventory, cart pages |
@@ -83,14 +83,14 @@
 ✅ Invalid username - DONE  
 ✅ Empty username - DONE  
 ✅ Empty password - DONE  
-❌ Login with problem_user (verify product images are broken)  
-❌ Login with performance_glitch_user (verify delayed response)  
-❌ Login with error_user (verify various UI errors)  
-❌ Login with visual_user (verify visual inconsistencies)  
-❌ Logo visibility verification  
-❌ Password masking verification  
-❌ Login button disabled when fields empty  
-❌ Tab order/keyboard navigation  
+✅ Login with problem_user (verify product images are broken) - DONE  
+✅ Login with performance_glitch_user (verify delayed response) - DONE  
+✅ Login with error_user (verify various UI errors) - DONE  
+✅ Login with visual_user (verify visual inconsistencies) - DONE  
+✅ Logo visibility verification - DONE  
+✅ Password masking verification - DONE  
+✅ Logo text content verification - DONE (replaced login button disabled test)  
+✅ Tab order/keyboard navigation - DONE  
 
 ### Inventory/Products Page (12 additional tests)
 ✅ Add single item to cart - DONE  
