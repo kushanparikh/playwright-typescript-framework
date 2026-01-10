@@ -66,10 +66,10 @@
 
 ## Current Test Coverage (Your Framework)
 
-### ✅ What You Have (16 tests)
+### ✅ What You Have (24 tests)
 | Category | Tests | Coverage |
 |----------|-------|----------|
-| Login | 5 | Valid login, locked user, invalid credentials, empty username, empty password |
+| Login | 13 | Valid login, locked user, invalid credentials, empty username, empty password, special user types (4), UI verification (3), keyboard navigation (1) |
 | Inventory | 2 | Add single item, add multiple items |
 | Filter | 3 | Sort A-Z, Z-A, Price Low-High, Price High-Low |
 | Visual Regression | 3 | Login, inventory, cart pages |
