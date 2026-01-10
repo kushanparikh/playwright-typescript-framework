@@ -63,4 +63,8 @@ export default class InventoryPage {
     getItemNameLocator(): Locator {
         return this.page.locator('[data-test="inventory-item-name"]');
     }
+
+    getProductImages(): Locator {
+        return this.page.locator('.inventory_item_img img');
+    }
 }

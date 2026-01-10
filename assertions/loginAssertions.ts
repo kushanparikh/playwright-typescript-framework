@@ -15,4 +15,20 @@ export default class LoginAssertions {
     async verifyDisplayedErrorMessage(message: string) {
         await expect(await this.loginPage.getDisplayedErrorMessage()).toContain(message);
     }
+
+    async verifyLogoIsVisible() {
+        await expect(this.loginPage.getLogo()).toBeVisible();
+    }
+
+    async verifyPasswordFieldIsMasked() {
+        await expect(this.loginPage.getPasswordField()).toHaveAttribute('type', 'password');
+    }
+
+    async verifyLoginButtonIsDisabled() {
+        await expect(this.loginPage.getLoginButton()).toBeDisabled();
+    }
+
+    async verifyLoginButtonIsEnabled() {
+        await expect(this.loginPage.getLoginButton()).toBeEnabled();
+    }
 }
