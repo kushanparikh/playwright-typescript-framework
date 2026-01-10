@@ -44,6 +44,8 @@ npx playwright test --ui
 npx playwright test tests/login.spec.ts
 npx playwright test tests/inventory.spec.ts
 npx playwright test tests/filter.spec.ts
+npx playwright test tests/visual/visualregression.spec.ts
+npx playwright test tests/accessibility/accessibility.spec.ts
 
 # Run tests for specific browser
 npx playwright test --project=chromium
@@ -65,19 +67,31 @@ npx playwright show-report
 ```
 playwright-typescript-framework/
 ├── tests/
-│   ├── login.spec.ts          # Login functionality tests
-│   ├── inventory.spec.ts      # Shopping cart tests
-│   └── filter.spec.ts         # Product filtering tests
+│   ├── fixtures/
+│   │   └── baseTest.ts           # Custom test fixtures (dependency injection)
+│   ├── login.spec.ts             # Login functionality tests
+│   ├── inventory.spec.ts         # Shopping cart tests
+│   ├── filter.spec.ts            # Product filtering tests
+│   ├── visual/
+│   │   └── visualregression.spec.ts  # Visual regression tests
+│   └── accessibility/
+│       └── accessibility.spec.ts # WCAG 2.1 accessibility tests
 ├── pages/
-│   ├── loginPage.ts           # Login page object model
-│   └── inventoryPage.ts       # Inventory page object model
+│   ├── loginPage.ts              # Login page object model
+│   └── inventoryPage.ts          # Inventory page object model
 ├── assertions/
-│   └── inventoryAssertions.ts # Custom assertion methods
+│   ├── loginAssertions.ts        # Login verification methods
+│   └── inventoryAssertions.ts    # Inventory verification methods
 ├── docs/
-│   └── LEARNING_NOTES.md      # Development notes and learnings
-├── playwright.config.ts       # Playwright configuration
-├── package.json               # Project dependencies
-└── README.md                  # This file
+│   ├── LEARNING_NOTES.md         # Development notes and learnings
+│   └── ARCHITECTURE.md           # High-level architecture documentation
+├── .github/
+│   └── workflows/
+│       └── playwright.yml        # CI/CD pipeline configuration
+├── playwright.config.ts          # Playwright configuration
+├── CHANGELOG.md                  # Version history
+├── package.json                  # Project dependencies
+└── README.md                     # This file
 ```
 
 ## Architecture
@@ -102,24 +116,85 @@ Dedicated assertion classes provide reusable validation methods:
 - **LoginAssertions**: Validates login page state and error messages
 - **InventoryAssertions**: Validates cart state, product sorting, and UI elements
 
-### Test Coverage
+## Test Coverage Details
 
-#### Login Tests (`login.spec.ts`)
-- Successful login with valid credentials
-- Error handling for locked out users
-- Validation for non-existent usernames
-- Empty password and username validation
+### Test Suite Breakdown
 
-#### Shopping Cart Tests (`inventory.spec.ts`)
-- Adding single items to cart
-- Adding multiple items to cart
-- Cart badge count verification
-- Button state changes (Add to Cart → Remove)
+| Test Suite | Tests | Coverage |
+|------------|-------|----------|
+| **Login Tests** | 5 | Valid login, locked user, invalid credentials, empty fields validation |
+| **Shopping Cart Tests** | 2 | Single/multiple item additions, cart state verification |
+| **Product Filter Tests** | 3 | Alphabetical (A-Z, Z-A) and price sorting (low-high, high-low) |
+| **Visual Regression Tests** | 3 | Login page, inventory page, cart page appearance validation |
+| **Accessibility Tests** | 3 | WCAG 2.1 Level A & AA compliance for login, inventory, cart pages |
+| **Total** | **16** | Comprehensive coverage of core e-commerce flows |
 
-#### Product Filtering Tests (`filter.spec.ts`)
-- Sort products by name (A-Z, Z-A)
-- Sort products by price (low to high, high to low)
-- Verification of correct sorting order
+### Key Testing Capabilities
+
+#### 1. **Functional Testing**
+- Complete user authentication flows (positive and negative scenarios)
+- Shopping cart operations (add, remove, state management)
+- Product filtering and sorting algorithms validation
+- Multi-step user journey testing
+
+#### 2. **Accessibility Testing (WCAG 2.1)**
+- Automated accessibility validation using axe-core
+- WCAG 2.1 Level A & AA compliance checking
+- Detailed violation reporting with impact analysis
+- Coverage across all major page types (login, inventory, cart)
+
+#### 3. **Visual Regression Testing**
+- Pixel-perfect UI comparison across test runs
+- Full-page screenshot capture and comparison
+- Cross-browser visual consistency validation
+- Threshold-based difference detection (configurable tolerance)
+
+#### 4. **Cross-Browser Testing**
+- Chromium (Chrome/Edge)
+- Firefox
+- WebKit (Safari)
+- Automated matrix execution in CI/CD
+
+#### 5. **CI/CD Integration**
+- GitHub Actions workflow with Windows runner
+- Parallel test execution across browsers
+- Automatic artifact collection (reports, screenshots, traces)
+- Retry strategy for flaky test resilience
+
+## Architecture Highlights
+
+### Design Patterns Implemented
+
+1. **Page Object Model (POM)**
+   - Separates page interactions from test logic
+   - Encapsulates UI locators and actions
+   - Improves maintainability and reusability
+
+2. **Custom Fixtures Pattern**
+   - Dependency injection for page objects and assertions
+   - Automatic setup and teardown
+   - Reduces boilerplate code in tests
+
+3. **Assertion Classes**
+   - Dedicated verification logic separate from page objects
+   - Reusable assertion methods across test suites
+   - Single Responsibility Principle adherence
+
+4. **TypeScript Strict Mode**
+   - Full type safety throughout the codebase
+   - Enhanced IDE support and refactoring confidence
+   - Compile-time error detection
+
+### Project Structure Philosophy
+
+```
+📦 Framework organized by responsibility:
+├── tests/          → Test specifications (what to test)
+├── pages/          → Page interactions (how to interact)
+├── assertions/     → Verification logic (how to verify)
+├── fixtures/       → Test dependencies (what tests need)
+└── docs/           → Learning and architecture documentation
+```
 
 ## Configuration
 
@@ -136,6 +211,8 @@ The project is configured to run tests across three browsers:
 - Screenshot capture on test failures
 - Trace collection on retry for debugging
 - CI/CD optimized settings (retries, worker configuration)
+- Visual regression threshold configuration
+- Accessibility testing with axe-core integration
 
 ## Test Data
 
@@ -165,6 +242,8 @@ npx playwright test --headed
 5. **Comprehensive Reporting**: Screenshots and traces for failed tests
 6. **Cross-Browser Testing**: Automated testing across multiple browsers
 7. **CI/CD Ready**: Configuration optimized for continuous integration environments
+8. **Accessibility First**: WCAG 2.1 compliance validation integrated into test suite
+9. **Visual Consistency**: Automated visual regression to catch unintended UI changes
 
 ## Usage Examples
 
@@ -188,6 +267,7 @@ test('example test without fixtures', async ({ page }) => {
   await loginPage.login('standard_user', 'secret_sauce');
 });
 ```
+
 ## Test Metrics
 
 | Metric | Count |
@@ -196,37 +276,77 @@ test('example test without fixtures', async ({ page }) => {
 | Test Files | 5 |
 | Page Objects | 2 |
 | Assertion Classes | 2 |
+| Custom Fixtures | 4 |
 | CI/CD Pipelines | 1 |
 | Browsers Tested | 3 |
+| Lines of Test Code | ~500+ |
 
 ## Technology Stack
 
-| Category | Technology |
-|----------|------------|
-| Framework | Playwright 1.57.0 |
-| Language | TypeScript 5.x |
-| CI/CD | GitHub Actions |
-| Accessibility | @axe-core/playwright |
-| Version Control | Git + GitHub |
+| Category | Technology | Version |
+|----------|------------|---------|
+| Framework | Playwright | 1.57.0 |
+| Language | TypeScript | 5.x |
+| CI/CD | GitHub Actions | Latest |
+| Accessibility | @axe-core/playwright | 4.11.0 |
+| Version Control | Git + GitHub | - |
+| Runtime | Node.js | 18+ |
 
 ## Key Features
 
-✅ **Modern Patterns**: Page Object Model, Custom Fixtures, Assertion Classes
-✅ **Accessibility Testing**: WCAG 2.1 Level A & AA compliance validation
-✅ **Visual Regression**: Automated screenshot comparison
-✅ **CI/CD Integration**: GitHub Actions with cross-browser matrix
-✅ **TypeScript**: Fully typed with strict configuration
-✅ **Comprehensive Reporting**: HTML reports with screenshots and traces
+✅ **Modern Patterns**: Page Object Model, Custom Fixtures, Assertion Classes  
+✅ **Accessibility Testing**: WCAG 2.1 Level A & AA compliance validation with axe-core  
+✅ **Visual Regression**: Automated screenshot comparison with configurable thresholds  
+✅ **CI/CD Integration**: GitHub Actions with cross-browser matrix execution  
+✅ **TypeScript**: Fully typed with strict configuration for type safety  
+✅ **Comprehensive Reporting**: HTML reports with screenshots, traces, and accessibility findings  
+✅ **Cross-Browser Support**: Chromium, Firefox, WebKit with parallel execution  
+✅ **Test Isolation**: Each test runs in isolated browser context  
+✅ **Auto-Healing**: Playwright's auto-wait and retry mechanisms  
+✅ **Evidence Collection**: Screenshots, traces, and detailed logs for debugging
 
 ## Skills Demonstrated
 
+### Technical Skills
 - Modern test automation frameworks (Playwright)
-- TypeScript expertise
-- Page Object Model pattern
-- Custom fixture creation
+- TypeScript expertise with strict typing
+- Page Object Model architecture pattern
+- Custom fixture creation and dependency injection
 - Accessibility compliance testing (WCAG 2.1)
-- Visual regression testing
-- CI/CD pipeline configuration
-- Cross-browser testing
-- Git version control
-- Technical documentation
+- Visual regression testing strategies
+- CI/CD pipeline configuration (GitHub Actions)
+- Cross-browser testing automation
+- Git version control and branching strategies
+
+### Software Engineering Principles
+- Separation of Concerns (SoC)
+- Don't Repeat Yourself (DRY)
+- Single Responsibility Principle (SRP)
+- Dependency Injection pattern
+- Clean code practices with comprehensive comments
+- Technical documentation and knowledge sharing
+
+### Quality Assurance Expertise
+- Test planning and coverage strategy
+- Positive and negative test scenario design
+- Accessibility standards compliance (WCAG 2.1)
+- Visual regression testing methodology
+- CI/CD integration for continuous quality
+- Test result reporting and artifact management
+
+## Additional Documentation
+
+- **[LEARNING_NOTES.md](docs/LEARNING_NOTES.md)**: Detailed learning documentation covering Playwright concepts, TypeScript patterns, and implementation insights
+- **[ARCHITECTURE.md](ARCHITECTURE.md)**: High-level architecture overview explaining design decisions and framework structure
+- **[CHANGELOG.md](CHANGELOG.md)**: Version history and feature evolution
+
+## Portfolio Context
+
+This project is part of a 5-project SDET portfolio demonstrating modern test automation expertise:
+1. **Playwright + TypeScript Framework** (This project) - UI testing foundation
+2. GraphQL API Testing Suite - Modern API patterns
+3. gRPC Testing Harness - Protocol buffer testing
+4. Authentication Testing Framework - OAuth, JWT, SAML
+5. Unified Test Reporting Platform - Cross-project result aggregation
+
+Each project showcases different aspects of modern test automation while building toward a comprehensive testing ecosystem.
