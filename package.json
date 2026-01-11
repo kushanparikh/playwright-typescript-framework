@@ -6,7 +6,7 @@
   "scripts": {
     "test": "playwright test",
     "test:stable": "playwright test --grep-invert @flaky",
-    "test:functional": "playwright test tests/login.spec.ts tests/inventory.spec.ts tests/filter.spec.ts",
+    "test:functional": "playwright test tests/login.spec.ts tests/inventory.spec.ts tests/filter.spec.ts tests/productDetail.spec.ts",
     "test:visual": "playwright test tests/visual/",
     "test:a11y": "playwright test tests/accessibility/"
   },
