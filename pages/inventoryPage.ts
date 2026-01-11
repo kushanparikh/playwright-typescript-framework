@@ -75,4 +75,8 @@ export default class InventoryPage {
     getProductSortContainer(): Locator {
         return this.page.locator('[data-test="product-sort-container"]');
     }
+
+    getProductImages(): Locator {
+        return this.page.locator('.inventory_item_img img');
+    }
 }

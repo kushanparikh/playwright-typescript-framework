@@ -22,8 +22,24 @@ export default class LoginPage {
     async getTitle(): Promise<string> {
         return await this.page.title();
     }
-    
+
     async getDisplayedErrorMessage(): Promise<string> {
         return (await this.page.locator('[data-test="error"]').textContent()) || '';
+    }
+
+    getLogo(): Locator {
+        return this.page.locator('.login_logo');
+    }
+
+    getUsernameField(): Locator {
+        return this.page.getByPlaceholder('Username');
+    }
+
+    getPasswordField(): Locator {
+        return this.page.getByPlaceholder('Password');
+    }
+
+    getLoginButton(): Locator {
+        return this.page.getByRole('button', { name: 'Login' });
     }
 }
