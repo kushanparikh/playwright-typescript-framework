@@ -159,12 +159,12 @@ Dedicated assertion classes provide reusable validation methods:
 | **Shopping Cart Tests** | 14 | Single/multiple item additions, cart state verification, product display validation, sorting, cart badge management |
 | **Product Detail Tests** | 5 | Navigation from inventory, product information display, add/remove from cart, back to products navigation, cart state maintenance |
 | **Cart Page Tests** | 8 | Cart navigation, item display, quantity verification, item removal, continue shopping, checkout navigation, empty cart state |
-| **Checkout Tests** | 11 | Form validation (information step), error handling, successful checkout flow, cancel operations, special character handling, order confirmation, thank you message, back home navigation, cart badge reset |
+| **Checkout Tests** | 17 | Form validation (information step), error handling, successful checkout flow, cancel operations, special character handling, order confirmation, thank you message, back home navigation, cart badge reset, review items in overview, item total calculation, tax calculation, total price calculation, cancel on overview, finish button completes order |
 | **Product Filter Tests** | 3 | Alphabetical (A-Z, Z-A) and price sorting (low-high, high-low) |
 | **Footer Tests** | 4 | Twitter link verification, Facebook link verification, LinkedIn link verification, copyright text display |
 | **Visual Regression Tests** | 3 | Login page, inventory page, cart page appearance validation |
 | **Accessibility Tests** | 3 | WCAG 2.1 Level A & AA compliance for login, inventory, cart pages |
-| **Total** | **64** | Comprehensive coverage of core e-commerce flows |
+| **Total** | **70** | Comprehensive coverage of core e-commerce flows |
 
 ### Key Testing Capabilities
 
@@ -309,14 +309,14 @@ test('example test without fixtures', async ({ page }) => {
 
 | Metric | Count |
 |--------|-------|
-| Total Tests | 64 |
+| Total Tests | 70 |
 | Test Files | 9 |
 | Page Objects | 6 |
 | Assertion Classes | 6 |
 | Custom Fixtures | 13 |
 | CI/CD Pipelines | 1 |
 | Browsers Tested | 3 |
-| Lines of Test Code | ~1700+ |
+| Lines of Test Code | ~1900+ |
 
 ## Technology Stack
 

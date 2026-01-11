@@ -76,9 +76,91 @@ export default class CheckoutPage {
         await this.page.locator('[data-test="finish"]').click();
     }
 
+    async clickCancelOnOverview() {
+        await this.page.locator('[data-test="cancel"]').click();
+    }
+
     // Checkout Overview Page Getters
     getFinishButton(): Locator {
         return this.page.locator('[data-test="finish"]');
+    }
+
+    getCancelButtonOnOverview(): Locator {
+        return this.page.locator('[data-test="cancel"]');
+    }
+
+    getCartItems(): Locator {
+        return this.page.locator('.cart_item');
+    }
+
+    async getCartItemsCount(): Promise<number> {
+        return await this.getCartItems().count();
+    }
+
+    getCartItemName(index: number = 0): Locator {
+        return this.page.locator('.inventory_item_name').nth(index);
+    }
+
+    async getCartItemNameText(index: number = 0): Promise<string> {
+        return (await this.getCartItemName(index).textContent()) || '';
+    }
+
+    getSubtotalLabel(): Locator {
+        return this.page.locator('[data-test="subtotal-label"]');
+    }
+
+    async getSubtotalText(): Promise<string> {
+        return (await this.getSubtotalLabel().textContent()) || '';
+    }
+
+    async getSubtotalAmount(): Promise<number> {
+        const text = await this.getSubtotalText();
+        const match = text.match(/\$(\d+\.\d+)/);
+        return match ? parseFloat(match[1]) : 0;
+    }
+
+    getTaxLabel(): Locator {
+        return this.page.locator('[data-test="tax-label"]');
+    }
+
+    async getTaxText(): Promise<string> {
+        return (await this.getTaxLabel().textContent()) || '';
+    }
+
+    async getTaxAmount(): Promise<number> {
+        const text = await this.getTaxText();
+        const match = text.match(/\$(\d+\.\d+)/);
+        return match ? parseFloat(match[1]) : 0;
+    }
+
+    getTotalLabel(): Locator {
+        return this.page.locator('[data-test="total-label"]');
+    }
+
+    async getTotalText(): Promise<string> {
+        return (await this.getTotalLabel().textContent()) || '';
+    }
+
+    async getTotalAmount(): Promise<number> {
+        const text = await this.getTotalText();
+        const match = text.match(/\$(\d+\.\d+)/);
+        return match ? parseFloat(match[1]) : 0;
+    }
+
+    getPaymentInfo(): Locator {
+        return this.page.locator('[data-test="payment-info-value"]');
+    }
+
+    async getPaymentInfoText(): Promise<string> {
+        return (await this.getPaymentInfo().textContent()) || '';
+    }
+
+    getShippingInfo(): Locator {
+        return this.page.locator('[data-test="shipping-info-value"]');
+    }
+
+    async getShippingInfoText(): Promise<string> {
+        return (await this.getShippingInfo().textContent()) || '';
     }
 
     // Checkout Complete Page Actions

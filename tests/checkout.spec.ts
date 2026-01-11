@@ -268,3 +268,138 @@ test('should reset cart badge to empty after completing order', async ({ page, c
     contentType: 'image/png',
   });
 });
+
+// Checkout Overview Page Tests
+test('should review items in checkout overview', async ({ page, checkoutPage, checkoutAssertions }, testInfo) => {
+  // Fill in valid checkout information
+  await checkoutPage.fillCheckoutInformation('John', 'Doe', '12345');
+  await checkoutPage.clickContinue();
+
+  // Verify we're on the checkout overview page
+  await checkoutAssertions.verifyCheckoutOverviewPageURL();
+
+  // Verify cart items are displayed
+  await checkoutAssertions.verifyCartItemsCount(1);
+  await checkoutAssertions.verifyCartItemName('Sauce Labs Backpack', 0);
+
+  // Verify payment and shipping information are visible
+  await checkoutAssertions.verifyPaymentInfoIsVisible();
+  await checkoutAssertions.verifyShippingInfoIsVisible();
+
+  // Attach screenshot to report
+  await testInfo.attach('checkout-overview-items', {
+    body: await page.screenshot(),
+    contentType: 'image/png',
+  });
+});
+
+test('should verify item total calculation in checkout overview', async ({ page, checkoutPage, checkoutAssertions }, testInfo) => {
+  // Fill in valid checkout information
+  await checkoutPage.fillCheckoutInformation('Jane', 'Smith', '54321');
+  await checkoutPage.clickContinue();
+
+  // Verify we're on the checkout overview page
+  await checkoutAssertions.verifyCheckoutOverviewPageURL();
+
+  // Verify subtotal is visible and correct (Sauce Labs Backpack = $29.99)
+  await checkoutAssertions.verifySubtotalIsVisible();
+  await checkoutAssertions.verifySubtotalAmount(29.99);
+
+  // Attach screenshot to report
+  await testInfo.attach('item-total-calculation', {
+    body: await page.screenshot(),
+    contentType: 'image/png',
+  });
+});
+
+test('should verify tax calculation in checkout overview', async ({ page, checkoutPage, checkoutAssertions }, testInfo) => {
+  // Fill in valid checkout information
+  await checkoutPage.fillCheckoutInformation('Bob', 'Johnson', '98765');
+  await checkoutPage.clickContinue();
+
+  // Verify we're on the checkout overview page
+  await checkoutAssertions.verifyCheckoutOverviewPageURL();
+
+  // Verify tax is visible and calculated (8% of $29.99 = $2.40)
+  await checkoutAssertions.verifyTaxIsVisible();
+  await checkoutAssertions.verifyTaxAmount(2.40);
+
+  // Attach screenshot to report
+  await testInfo.attach('tax-calculation', {
+    body: await page.screenshot(),
+    contentType: 'image/png',
+  });
+});
+
+test('should verify total price calculation in checkout overview', async ({ page, checkoutPage, checkoutAssertions }, testInfo) => {
+  // Fill in valid checkout information
+  await checkoutPage.fillCheckoutInformation('Alice', 'Williams', '11111');
+  await checkoutPage.clickContinue();
+
+  // Verify we're on the checkout overview page
+  await checkoutAssertions.verifyCheckoutOverviewPageURL();
+
+  // Verify total is visible
+  await checkoutAssertions.verifyTotalIsVisible();
+
+  // Verify total calculation (subtotal + tax = $29.99 + $2.40 = $32.39)
+  await checkoutAssertions.verifyTotalCalculation();
+  await checkoutAssertions.verifyTotalAmount(32.39);
+
+  // Attach screenshot to report
+  await testInfo.attach('total-price-calculation', {
+    body: await page.screenshot(),
+    contentType: 'image/png',
+  });
+});
+
+test('should return to inventory when cancel button is clicked on overview', async ({ page, checkoutPage, checkoutAssertions }, testInfo) => {
+  // Fill in valid checkout information
+  await checkoutPage.fillCheckoutInformation('Charlie', 'Brown', '55555');
+  await checkoutPage.clickContinue();
+
+  // Verify we're on the checkout overview page
+  await checkoutAssertions.verifyCheckoutOverviewPageURL();
+
+  // Verify cancel button is visible
+  await checkoutAssertions.verifyCancelButtonOnOverviewIsVisible();
+
+  // Click cancel button
+  await checkoutPage.clickCancelOnOverview();
+
+  // Verify we're back on the inventory page
+  await checkoutAssertions.verifyInventoryPageURL();
+
+  // Attach screenshot to report
+  await testInfo.attach('cancel-returns-to-inventory', {
+    body: await page.screenshot(),
+    contentType: 'image/png',
+  });
+});
+
+test('should complete order when finish button is clicked', async ({ page, checkoutPage, checkoutAssertions }, testInfo) => {
+  // Fill in valid checkout information
+  await checkoutPage.fillCheckoutInformation('David', 'Miller', '77777');
+  await checkoutPage.clickContinue();
+
+  // Verify we're on the checkout overview page
+  await checkoutAssertions.verifyCheckoutOverviewPageURL();
+
+  // Verify finish button is visible
+  await checkoutAssertions.verifyFinishButtonIsVisible();
+
+  // Click finish button
+  await checkoutPage.clickFinish();
+
+  // Verify we're on the checkout complete page
+  await checkoutAssertions.verifyCheckoutCompletePageURL();
+
+  // Verify order confirmation is displayed
+  await checkoutAssertions.verifyCompleteHeader('Thank you for your order!');
+
+  // Attach screenshot to report
+  await testInfo.attach('finish-completes-order', {
+    body: await page.screenshot(),
+    contentType: 'image/png',
+  });
+});

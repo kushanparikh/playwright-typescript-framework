@@ -70,4 +70,61 @@ export default class CheckoutAssertions {
     async verifyFinishButtonIsVisible() {
         await expect(this.checkoutPage.getFinishButton()).toBeVisible();
     }
+
+    async verifyCancelButtonOnOverviewIsVisible() {
+        await expect(this.checkoutPage.getCancelButtonOnOverview()).toBeVisible();
+    }
+
+    async verifyCartItemsCount(expectedCount: number) {
+        const actualCount = await this.checkoutPage.getCartItemsCount();
+        expect(actualCount).toBe(expectedCount);
+    }
+
+    async verifyCartItemName(expectedName: string, index: number = 0) {
+        const actualName = await this.checkoutPage.getCartItemNameText(index);
+        expect(actualName).toBe(expectedName);
+    }
+
+    async verifySubtotalIsVisible() {
+        await expect(this.checkoutPage.getSubtotalLabel()).toBeVisible();
+    }
+
+    async verifySubtotalAmount(expectedAmount: number) {
+        const actualAmount = await this.checkoutPage.getSubtotalAmount();
+        expect(actualAmount).toBe(expectedAmount);
+    }
+
+    async verifyTaxIsVisible() {
+        await expect(this.checkoutPage.getTaxLabel()).toBeVisible();
+    }
+
+    async verifyTaxAmount(expectedAmount: number) {
+        const actualAmount = await this.checkoutPage.getTaxAmount();
+        expect(actualAmount).toBeCloseTo(expectedAmount, 2);
+    }
+
+    async verifyTotalIsVisible() {
+        await expect(this.checkoutPage.getTotalLabel()).toBeVisible();
+    }
+
+    async verifyTotalAmount(expectedAmount: number) {
+        const actualAmount = await this.checkoutPage.getTotalAmount();
+        expect(actualAmount).toBeCloseTo(expectedAmount, 2);
+    }
+
+    async verifyTotalCalculation() {
+        const subtotal = await this.checkoutPage.getSubtotalAmount();
+        const tax = await this.checkoutPage.getTaxAmount();
+        const total = await this.checkoutPage.getTotalAmount();
+        const expectedTotal = subtotal + tax;
+        expect(total).toBeCloseTo(expectedTotal, 2);
+    }
+
+    async verifyPaymentInfoIsVisible() {
+        await expect(this.checkoutPage.getPaymentInfo()).toBeVisible();
+    }
+
+    async verifyShippingInfoIsVisible() {
+        await expect(this.checkoutPage.getShippingInfo()).toBeVisible();
+    }
 }
