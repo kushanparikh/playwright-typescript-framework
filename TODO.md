@@ -66,11 +66,11 @@
 
 ## Current Test Coverage (Your Framework)
 
-### ✅ What You Have (16 tests)
+### ✅ What You Have (28 tests)
 | Category | Tests | Coverage |
 |----------|-------|----------|
 | Login | 5 | Valid login, locked user, invalid credentials, empty username, empty password |
-| Inventory | 2 | Add single item, add multiple items |
+| Inventory | 14 | Add single item, add multiple items, remove single/multiple items, cart badge updates, all products displayed, product names/prices/images verification, default sort, add/remove all items |
 | Filter | 3 | Sort A-Z, Z-A, Price Low-High, Price High-Low |
 | Visual Regression | 3 | Login, inventory, cart pages |
 | Accessibility | 3 | Login, inventory, cart pages |
@@ -93,23 +93,23 @@
 ❌ Tab order/keyboard navigation  
 
 ### Inventory/Products Page (12 additional tests)
-✅ Add single item to cart - DONE  
-✅ Add multiple items to cart - DONE  
-❌ Remove single item from cart  
-❌ Remove multiple items from cart  
-❌ Cart badge updates correctly (add, remove scenarios)  
-❌ Cart badge disappears when cart is empty  
-❌ All 6 products displayed correctly  
-❌ Product names match expected  
-❌ Product prices match expected  
-❌ Product images displayed (not broken)  
-✅ Sort by name A-Z - DONE  
-✅ Sort by name Z-A - DONE  
-✅ Sort by price Low-High - DONE  
-✅ Sort by price High-Low - DONE  
-❌ Default sort order verification  
-❌ Add all items to cart  
-❌ Remove all items from cart  
+✅ Add single item to cart - DONE
+✅ Add multiple items to cart - DONE
+✅ Remove single item from cart - DONE
+✅ Remove multiple items from cart - DONE
+✅ Cart badge updates correctly (add, remove scenarios) - DONE
+✅ Cart badge disappears when cart is empty - DONE
+✅ All 6 products displayed correctly - DONE
+✅ Product names match expected - DONE
+✅ Product prices match expected - DONE
+✅ Product images displayed (not broken) - DONE
+✅ Sort by name A-Z - DONE
+✅ Sort by name Z-A - DONE
+✅ Sort by price Low-High - DONE
+✅ Sort by price High-Low - DONE
+✅ Default sort order verification - DONE
+✅ Add all items to cart - DONE
+✅ Remove all items from cart - DONE  
 
 ### Product Detail Page (5 additional tests) - COMPLETELY MISSING
 ❌ Navigate to product detail from inventory  

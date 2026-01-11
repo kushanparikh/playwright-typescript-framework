@@ -94,4 +94,41 @@ export default class InventoryAssertions {
             expect(nameElements).toEqual(reverseSortedNames);
         }
     }
+
+    async verifyInventoryItemCount(expectedCount: number) {
+        await expect(this.inventoryPage.getAllInventoryItems()).toHaveCount(expectedCount);
+    }
+
+    async verifyProductNamesExist(expectedNames: string[]) {
+        const nameElements = await this.inventoryPage.getItemNameLocator().allTextContents();
+        for (const name of expectedNames) {
+            expect(nameElements).toContain(name);
+        }
+    }
+
+    async verifyProductPrices(expectedPrices: string[]) {
+        const priceElements = await this.inventoryPage.getItemPriceLocator().allTextContents();
+        for (const price of expectedPrices) {
+            expect(priceElements).toContain(price);
+        }
+    }
+
+    async verifyAllProductImagesDisplayed() {
+        const images = this.inventoryPage.getInventoryItemImage();
+        const imageCount = await images.count();
+
+        for (let i = 0; i < imageCount; i++) {
+            const img = images.nth(i);
+            await expect(img).toBeVisible();
+
+            const src = await img.getAttribute('src');
+            expect(src).toBeTruthy();
+            expect(src).not.toContain('WithGarbageOnItToBreakTheUrl');
+        }
+    }
+
+    async verifyDefaultSortOrder() {
+        const sortValue = await this.inventoryPage.getProductSortContainer().inputValue();
+        expect(sortValue).toBe('az');
+    }
 }
