@@ -64,6 +64,18 @@ export default class InventoryPage {
         return this.page.locator('[data-test="inventory-item-name"]');
     }
 
+    getAllInventoryItems(): Locator {
+        return this.page.locator('[data-test="inventory-item"]');
+    }
+
+    getInventoryItemImage(): Locator {
+        return this.page.locator('[data-test="inventory-item-img"]');
+    }
+
+    getProductSortContainer(): Locator {
+        return this.page.locator('[data-test="product-sort-container"]');
+    }
+
     getProductImages(): Locator {
         return this.page.locator('.inventory_item_img img');
     }
