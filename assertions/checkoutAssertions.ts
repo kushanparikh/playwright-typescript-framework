@@ -44,4 +44,30 @@ export default class CheckoutAssertions {
     async verifyCancelButtonIsVisible() {
         await expect(this.checkoutPage.getCancelButton()).toBeVisible();
     }
+
+    async verifyCheckoutCompletePageURL() {
+        await expect(this.checkoutPage.getURL()).toContain('checkout-complete.html');
+    }
+
+    async verifyInventoryPageURL() {
+        await expect(this.checkoutPage.getURL()).toContain('inventory.html');
+    }
+
+    async verifyCompleteHeader(expectedText: string) {
+        await expect(this.checkoutPage.getCompleteHeader()).toBeVisible();
+        await expect(await this.checkoutPage.getCompleteHeaderText()).toContain(expectedText);
+    }
+
+    async verifyCompleteText(expectedText: string) {
+        await expect(this.checkoutPage.getCompleteText()).toBeVisible();
+        await expect(await this.checkoutPage.getCompleteTextContent()).toContain(expectedText);
+    }
+
+    async verifyBackHomeButtonIsVisible() {
+        await expect(this.checkoutPage.getBackHomeButton()).toBeVisible();
+    }
+
+    async verifyFinishButtonIsVisible() {
+        await expect(this.checkoutPage.getFinishButton()).toBeVisible();
+    }
 }

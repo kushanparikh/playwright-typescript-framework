@@ -70,4 +70,40 @@ export default class CheckoutPage {
     async getErrorMessageText(): Promise<string> {
         return (await this.page.locator('[data-test="error"]').textContent()) || '';
     }
+
+    // Checkout Overview Page Actions
+    async clickFinish() {
+        await this.page.locator('[data-test="finish"]').click();
+    }
+
+    // Checkout Overview Page Getters
+    getFinishButton(): Locator {
+        return this.page.locator('[data-test="finish"]');
+    }
+
+    // Checkout Complete Page Actions
+    async clickBackHome() {
+        await this.page.locator('[data-test="back-to-products"]').click();
+    }
+
+    // Checkout Complete Page Getters
+    getCompleteHeader(): Locator {
+        return this.page.locator('[data-test="complete-header"]');
+    }
+
+    async getCompleteHeaderText(): Promise<string> {
+        return (await this.page.locator('[data-test="complete-header"]').textContent()) || '';
+    }
+
+    getCompleteText(): Locator {
+        return this.page.locator('[data-test="complete-text"]');
+    }
+
+    async getCompleteTextContent(): Promise<string> {
+        return (await this.page.locator('[data-test="complete-text"]').textContent()) || '';
+    }
+
+    getBackHomeButton(): Locator {
+        return this.page.locator('[data-test="back-to-products"]');
+    }
 }

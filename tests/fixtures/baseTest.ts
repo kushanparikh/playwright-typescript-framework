@@ -5,12 +5,14 @@ import CartPage from "../../pages/cartPage";
 import ProductDetailPage from "../../pages/productDetailPage";
 import CheckoutPage from "../../pages/checkoutPage";
 import FooterPage from "../../pages/footerPage";
+import HamburgerMenuPage from "../../pages/hamburgerMenuPage";
 import InventoryAssertions from "../../assertions/inventoryAssertions";
 import LoginAssertions from "../../assertions/loginAssertions";
 import CartAssertions from "../../assertions/cartAssertions";
 import ProductDetailAssertions from "../../assertions/productDetailAssertions";
 import CheckoutAssertions from "../../assertions/checkoutAssertions";
 import FooterAssertions from "../../assertions/footerAssertions";
+import HamburgerMenuAssertions from "../../assertions/hamburgerMenuAssertions";
 
 // 1. Define a type for your fixtures
 type MyFixtures = {
@@ -20,12 +22,14 @@ type MyFixtures = {
     productDetailPage: ProductDetailPage;
     checkoutPage: CheckoutPage;
     footerPage: FooterPage;
+    hamburgerMenuPage: HamburgerMenuPage;
     inventoryAssertions: InventoryAssertions;
     loginAssertions: LoginAssertions;
     cartAssertions: CartAssertions;
     productDetailAssertions: ProductDetailAssertions;
     checkoutAssertions: CheckoutAssertions;
     footerAssertions: FooterAssertions;
+    hamburgerMenuAssertions: HamburgerMenuAssertions;
 };
 
 // 2. Extend the base test to include these fixtures
@@ -54,6 +58,10 @@ export const test = baseTest.extend<MyFixtures>({
         await use(new FooterPage(page));
     },
 
+    hamburgerMenuPage: async ({ page }, use) => {
+        await use(new HamburgerMenuPage(page));
+    },
+
     inventoryAssertions: async ({ inventoryPage }, use) => {
         await use(new InventoryAssertions(inventoryPage));
     },
@@ -76,6 +84,10 @@ export const test = baseTest.extend<MyFixtures>({
 
     footerAssertions: async ({ footerPage }, use) => {
         await use(new FooterAssertions(footerPage));
+    },
+
+    hamburgerMenuAssertions: async ({ hamburgerMenuPage }, use) => {
+        await use(new HamburgerMenuAssertions(hamburgerMenuPage));
     },
 });
 

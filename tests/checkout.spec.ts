@@ -157,3 +157,114 @@ test('should accept special characters in name fields', async ({ page, checkoutP
     contentType: 'image/png',
   });
 });
+
+test('should display order confirmation message on checkout complete page', async ({ page, checkoutPage, checkoutAssertions, inventoryPage, inventoryAssertions }, testInfo) => {
+  // Fill in valid checkout information
+  await checkoutPage.fillCheckoutInformation('John', 'Doe', '12345');
+  await checkoutPage.clickContinue();
+
+  // Verify we're on checkout overview page
+  await checkoutAssertions.verifyCheckoutOverviewPageURL();
+
+  // Click finish button to complete order
+  await checkoutPage.clickFinish();
+
+  // Verify we're on the checkout complete page
+  await checkoutAssertions.verifyCheckoutCompletePageURL();
+
+  // Verify order confirmation header is displayed
+  await checkoutAssertions.verifyCompleteHeader('Thank you for your order!');
+
+  // Attach screenshot to report
+  await testInfo.attach('order-confirmation-message', {
+    body: await page.screenshot(),
+    contentType: 'image/png',
+  });
+});
+
+test('should display thank you message on checkout complete page', async ({ page, checkoutPage, checkoutAssertions }, testInfo) => {
+  // Fill in valid checkout information
+  await checkoutPage.fillCheckoutInformation('Jane', 'Smith', '54321');
+  await checkoutPage.clickContinue();
+
+  // Verify we're on checkout overview page
+  await checkoutAssertions.verifyCheckoutOverviewPageURL();
+
+  // Click finish button to complete order
+  await checkoutPage.clickFinish();
+
+  // Verify we're on the checkout complete page
+  await checkoutAssertions.verifyCheckoutCompletePageURL();
+
+  // Verify thank you text is displayed
+  await checkoutAssertions.verifyCompleteText('Your order has been dispatched');
+
+  // Attach screenshot to report
+  await testInfo.attach('thank-you-message', {
+    body: await page.screenshot(),
+    contentType: 'image/png',
+  });
+});
+
+test('should return to inventory page when back home button is clicked', async ({ page, checkoutPage, checkoutAssertions }, testInfo) => {
+  // Fill in valid checkout information
+  await checkoutPage.fillCheckoutInformation('Bob', 'Johnson', '98765');
+  await checkoutPage.clickContinue();
+
+  // Verify we're on checkout overview page
+  await checkoutAssertions.verifyCheckoutOverviewPageURL();
+
+  // Click finish button to complete order
+  await checkoutPage.clickFinish();
+
+  // Verify we're on the checkout complete page
+  await checkoutAssertions.verifyCheckoutCompletePageURL();
+
+  // Verify back home button is visible
+  await checkoutAssertions.verifyBackHomeButtonIsVisible();
+
+  // Click back home button
+  await checkoutPage.clickBackHome();
+
+  // Verify we're back on the inventory page
+  await checkoutAssertions.verifyInventoryPageURL();
+
+  // Attach screenshot to report
+  await testInfo.attach('back-home-navigation', {
+    body: await page.screenshot(),
+    contentType: 'image/png',
+  });
+});
+
+test('should reset cart badge to empty after completing order', async ({ page, checkoutPage, checkoutAssertions, inventoryPage, inventoryAssertions }, testInfo) => {
+  // Verify cart badge shows 1 item before checkout
+  await inventoryAssertions.verifyCartBadgeCount('1');
+
+  // Fill in valid checkout information
+  await checkoutPage.fillCheckoutInformation('Alice', 'Williams', '11111');
+  await checkoutPage.clickContinue();
+
+  // Verify we're on checkout overview page
+  await checkoutAssertions.verifyCheckoutOverviewPageURL();
+
+  // Click finish button to complete order
+  await checkoutPage.clickFinish();
+
+  // Verify we're on the checkout complete page
+  await checkoutAssertions.verifyCheckoutCompletePageURL();
+
+  // Click back home button to return to inventory
+  await checkoutPage.clickBackHome();
+
+  // Verify we're on the inventory page
+  await checkoutAssertions.verifyInventoryPageURL();
+
+  // Verify cart badge is not visible (empty cart)
+  await inventoryAssertions.verifyCartBadgeNotVisible();
+
+  // Attach screenshot to report
+  await testInfo.attach('cart-badge-reset', {
+    body: await page.screenshot(),
+    contentType: 'image/png',
+  });
+});
