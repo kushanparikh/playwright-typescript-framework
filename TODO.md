@@ -66,16 +66,19 @@
 
 ## Current Test Coverage (Your Framework)
 
-### ✅ What You Have (36 tests)
+### ✅ What You Have (56 tests)
 | Category | Tests | Coverage |
 |----------|-------|----------|
 | Login | 13 | Valid login, locked user, invalid credentials, empty username, empty password, special user types (4), UI verification (3), keyboard navigation (1) |
 | Inventory | 14 | Add single item, add multiple items, remove single/multiple items, cart badge updates, all products displayed, product names/prices/images verification, default sort, add/remove all items |
+| Product Details | 5 | Navigation from inventory, product information display, add to cart from detail page, remove from cart from detail page, back to products navigation, cart state maintenance across pages |
+| Cart Page | 8 | Navigate to cart, display correct items, display correct quantities, remove single item, remove all items, continue shopping navigation, checkout navigation, empty cart state |
+| Checkout | 7 | Valid information and continue, empty first name validation, empty last name validation, empty postal code validation, cancel button returns to cart, form validation messages, special characters in name fields |
 | Filter | 3 | Sort A-Z, Z-A, Price Low-High, Price High-Low |
 | Visual Regression | 3 | Login, inventory, cart pages |
 | Accessibility | 3 | Login, inventory, cart pages |
 
-## ❌ Test Gaps - What's Missing (44+ Additional Tests)
+## ❌ Test Gaps - What's Missing (39 Additional Tests)
 
 ### Login Page (8 additional tests)
 ✅ Valid login - DONE  
@@ -93,49 +96,49 @@
 ✅ Tab order/keyboard navigation - DONE  
 
 ### Inventory/Products Page (12 additional tests)
-✅ Add single item to cart - DONE
-✅ Add multiple items to cart - DONE
-✅ Remove single item from cart - DONE
-✅ Remove multiple items from cart - DONE
-✅ Cart badge updates correctly (add, remove scenarios) - DONE
-✅ Cart badge disappears when cart is empty - DONE
-✅ All 6 products displayed correctly - DONE
-✅ Product names match expected - DONE
-✅ Product prices match expected - DONE
-✅ Product images displayed (not broken) - DONE
-✅ Sort by name A-Z - DONE
-✅ Sort by name Z-A - DONE
-✅ Sort by price Low-High - DONE
-✅ Sort by price High-Low - DONE
-✅ Default sort order verification - DONE
-✅ Add all items to cart - DONE
-✅ Remove all items from cart - DONE  
+✅ Add single item to cart - DONE  
+✅ Add multiple items to cart - DONE  
+✅ Remove single item from cart - DONE  
+✅ Remove multiple items from cart - DONE  
+✅ Cart badge updates correctly (add, remove scenarios) - DONE  
+✅ Cart badge disappears when cart is empty - DONE  
+✅ All 6 products displayed correctly - DONE  
+✅ Product names match expected - DONE  
+✅ Product prices match expected - DONE  
+✅ Product images displayed (not broken) - DONE  
+✅ Sort by name A-Z - DONE  
+✅ Sort by name Z-A - DONE  
+✅ Sort by price Low-High - DONE  
+✅ Sort by price High-Low - DONE  
+✅ Default sort order verification - DONE  
+✅ Add all items to cart - DONE  
+✅ Remove all items from cart - DONE
 
 ### Product Detail Page (5 additional tests) - COMPLETELY MISSING
-❌ Navigate to product detail from inventory  
-❌ Product detail displays correct information  
-❌ Add to cart from product detail page  
-❌ Remove from cart on product detail page  
-❌ Back to products button navigation  
+✅ Navigate to product detail from inventory  
+✅ Product detail displays correct information  
+✅ Add to cart from product detail page  
+✅ Remove from cart on product detail page  
+✅ Back to products button navigation  
 
 ### Cart Page (8 additional tests) - MOSTLY MISSING
-❌ Navigate to cart page  
-❌ Cart displays correct items  
-❌ Cart displays correct quantities  
-❌ Remove item from cart page  
-❌ Remove all items from cart  
-❌ Continue shopping button returns to inventory  
-❌ Checkout button navigation  
-❌ Empty cart message/state  
+✅ Navigate to cart page  
+✅ Cart displays correct items  
+✅ Cart displays correct quantities  
+✅ Remove item from cart page  
+✅ Remove all items from cart  
+✅ Continue shopping button returns to inventory  
+✅ Checkout button navigation  
+✅ Empty cart message/state  
 
 ### Checkout: Your Information (7 additional tests) - COMPLETELY MISSING
-❌ Enter valid information and continue  
-❌ Empty first name validation  
-❌ Empty last name validation  
-❌ Empty postal code validation  
-❌ Cancel button returns to cart  
-❌ Form field validation messages  
-❌ Special characters in name fields  
+✅ Enter valid information and continue  
+✅ Empty first name validation  
+✅ Empty last name validation  
+✅ Empty postal code validation  
+✅ Cancel button returns to cart  
+✅ Form field validation messages  
+✅ Special characters in name fields  
 
 ### Checkout: Overview (6 additional tests) - COMPLETELY MISSING
 ❌ Review items in checkout overview  
