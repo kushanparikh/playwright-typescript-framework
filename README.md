@@ -43,6 +43,9 @@ npx playwright test --ui
 # Run specific test file
 npx playwright test tests/login.spec.ts
 npx playwright test tests/inventory.spec.ts
+npx playwright test tests/productDetail.spec.ts
+npx playwright test tests/cart.spec.ts
+npx playwright test tests/checkout.spec.ts
 npx playwright test tests/filter.spec.ts
 npx playwright test tests/visual/visualregression.spec.ts
 npx playwright test tests/accessibility/accessibility.spec.ts
@@ -71,6 +74,9 @@ playwright-typescript-framework/
 │   │   └── baseTest.ts           # Custom test fixtures (dependency injection)
 │   ├── login.spec.ts             # Login functionality tests
 │   ├── inventory.spec.ts         # Shopping cart tests
+│   ├── productDetail.spec.ts      # Product detail page tests
+│   ├── cart.spec.ts              # Cart page functionality tests
+│   ├── checkout.spec.ts          # Checkout flow tests
 │   ├── filter.spec.ts            # Product filtering tests
 │   ├── visual/
 │   │   └── visualregression.spec.ts  # Visual regression tests
@@ -78,10 +84,16 @@ playwright-typescript-framework/
 │       └── accessibility.spec.ts # WCAG 2.1 accessibility tests
 ├── pages/
 │   ├── loginPage.ts              # Login page object model
-│   └── inventoryPage.ts          # Inventory page object model
+│   ├── inventoryPage.ts          # Inventory page object model
+│   ├── productDetailPage.ts      # Product detail page object model
+│   ├── cartPage.ts               # Cart page object model
+│   └── checkoutPage.ts           # Checkout page object model
 ├── assertions/
 │   ├── loginAssertions.ts        # Login verification methods
-│   └── inventoryAssertions.ts    # Inventory verification methods
+│   ├── inventoryAssertions.ts    # Inventory verification methods
+│   ├── productDetailAssertions.ts # Product detail verification methods
+│   ├── cartAssertions.ts         # Cart verification methods
+│   └── checkoutAssertions.ts     # Checkout verification methods
 ├── docs/
 │   ├── LEARNING_NOTES.md         # Development notes and learnings
 │   └── ARCHITECTURE.md           # High-level architecture documentation
@@ -102,6 +114,9 @@ The framework follows the Page Object Model pattern for maintainable test code:
 
 - **LoginPage**: Handles login functionality with username/password fields
 - **InventoryPage**: Manages product inventory, cart operations, and filtering
+- **ProductDetailPage**: Handles individual product view and cart operations
+- **CartPage**: Manages shopping cart display and item operations
+- **CheckoutPage**: Handles checkout information form and navigation
 
 ### Custom Fixtures
 Enhanced test setup using Playwright's custom fixtures for cleaner test code:
@@ -109,13 +124,22 @@ Enhanced test setup using Playwright's custom fixtures for cleaner test code:
 - **baseTest.ts**: Central fixture configuration providing:
   - `loginPage`: Pre-configured LoginPage instance
   - `inventoryPage`: Pre-configured InventoryPage instance  
+  - `productDetailPage`: Pre-configured ProductDetailPage instance
+  - `cartPage`: Pre-configured CartPage instance
+  - `checkoutPage`: Pre-configured CheckoutPage instance
   - `loginAssertions`: Pre-configured LoginAssertions instance
   - `inventoryAssertions`: Pre-configured InventoryAssertions instance
+  - `productDetailAssertions`: Pre-configured ProductDetailAssertions instance
+  - `cartAssertions`: Pre-configured CartAssertions instance
+  - `checkoutAssertions`: Pre-configured CheckoutAssertions instance
 
 ### Custom Assertions
 Dedicated assertion classes provide reusable validation methods:
 - **LoginAssertions**: Validates login page state and error messages
 - **InventoryAssertions**: Validates cart state, product sorting, and UI elements
+- **ProductDetailAssertions**: Validates product information display and cart operations
+- **CartAssertions**: Validates cart item display, quantities, and navigation
+- **CheckoutAssertions**: Validates form validation and checkout flow
 
 ## Test Coverage Details
 
@@ -123,12 +147,15 @@ Dedicated assertion classes provide reusable validation methods:
 
 | Test Suite | Tests | Coverage |
 |------------|-------|----------|
-| **Login Tests** | 5 | Valid login, locked user, invalid credentials, empty fields validation |
-| **Shopping Cart Tests** | 2 | Single/multiple item additions, cart state verification |
+| **Login Tests** | 13 | Valid login, locked user, invalid credentials, empty fields validation, special user types, UI verification, keyboard navigation |
+| **Shopping Cart Tests** | 14 | Single/multiple item additions, cart state verification, product display validation, sorting, cart badge management |
+| **Product Detail Tests** | 5 | Navigation from inventory, product information display, add/remove from cart, back to products navigation, cart state maintenance |
+| **Cart Page Tests** | 8 | Cart navigation, item display, quantity verification, item removal, continue shopping, checkout navigation, empty cart state |
+| **Checkout Tests** | 7 | Form validation, error handling, successful checkout flow, cancel operations, special character handling |
 | **Product Filter Tests** | 3 | Alphabetical (A-Z, Z-A) and price sorting (low-high, high-low) |
 | **Visual Regression Tests** | 3 | Login page, inventory page, cart page appearance validation |
 | **Accessibility Tests** | 3 | WCAG 2.1 Level A & AA compliance for login, inventory, cart pages |
-| **Total** | **16** | Comprehensive coverage of core e-commerce flows |
+| **Total** | **56** | Comprehensive coverage of core e-commerce flows |
 
 ### Key Testing Capabilities
 
@@ -273,14 +300,14 @@ test('example test without fixtures', async ({ page }) => {
 
 | Metric | Count |
 |--------|-------|
-| Total Tests | 16 |
-| Test Files | 5 |
-| Page Objects | 2 |
-| Assertion Classes | 2 |
-| Custom Fixtures | 4 |
+| Total Tests | 56 |
+| Test Files | 8 |
+| Page Objects | 5 |
+| Assertion Classes | 5 |
+| Custom Fixtures | 9 |
 | CI/CD Pipelines | 1 |
 | Browsers Tested | 3 |
-| Lines of Test Code | ~500+ |
+| Lines of Test Code | ~1500+ |
 
 ## Technology Stack
 
