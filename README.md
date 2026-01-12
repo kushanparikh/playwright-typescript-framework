@@ -49,6 +49,7 @@ npx playwright test tests/checkout.spec.ts
 npx playwright test tests/filter.spec.ts
 npx playwright test tests/footer.spec.ts
 npx playwright test tests/hamburgerMenu.spec.ts
+npx playwright test tests/e2e/completePurchase.spec.ts
 npx playwright test tests/visual/visualregression.spec.ts
 npx playwright test tests/accessibility/accessibility.spec.ts
 
@@ -82,6 +83,8 @@ playwright-typescript-framework/
 │   ├── filter.spec.ts            # Product filtering tests
 │   ├── footer.spec.ts            # Footer link verification tests
 │   ├── hamburgerMenu.spec.ts     # Hamburger menu navigation tests
+│   ├── e2e/
+│   │   └── completePurchase.spec.ts  # End-to-end purchase workflow tests
 │   ├── visual/
 │   │   └── visualregression.spec.ts  # Visual regression tests
 │   └── accessibility/
@@ -171,6 +174,7 @@ Dedicated assertion classes provide reusable validation methods:
 | **Product Filter Tests** | 3 | Alphabetical (A-Z, Z-A) and price sorting (low-high, high-low) |
 | **Footer Tests** | 4 | Twitter link verification, Facebook link verification, LinkedIn link verification, copyright text display |
 | **Hamburger Menu Tests** | 6 | Menu open/close functionality, All Items navigation, About link external navigation, logout functionality, reset app state |
+| **End-to-End Workflows** | 10 | Complete purchase flows (single/multiple items), add/remove/add workflow, sort and checkout, product detail navigation, cart persistence across pages, reset app state, problem_user error validation, performance_glitch_user testing |
 | **Visual Regression Tests** | 3 | Login page, inventory page, cart page appearance validation |
 | **Accessibility Tests** | 3 | WCAG 2.1 Level A & AA compliance for login, inventory, cart pages |
 | **Total** | **76** | Comprehensive coverage of core e-commerce flows |
@@ -182,6 +186,7 @@ Dedicated assertion classes provide reusable validation methods:
 - Shopping cart operations (add, remove, state management)
 - Product filtering and sorting algorithms validation
 - Multi-step user journey testing
+- **End-to-End workflow testing** (complete purchase flows from login to order confirmation)
 
 #### 2. **Accessibility Testing (WCAG 2.1)**
 - Automated accessibility validation using axe-core
