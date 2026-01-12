@@ -177,7 +177,7 @@ Dedicated assertion classes provide reusable validation methods:
 | **End-to-End Workflows** | 10 | Complete purchase flows (single/multiple items), add/remove/add workflow, sort and checkout, product detail navigation, cart persistence across pages, reset app state, problem_user error validation, performance_glitch_user testing |
 | **Visual Regression Tests** | 3 | Login page, inventory page, cart page appearance validation |
 | **Accessibility Tests** | 3 | WCAG 2.1 Level A & AA compliance for login, inventory, cart pages |
-| **Total** | **76** | Comprehensive coverage of core e-commerce flows |
+| **Total** | **86** | Comprehensive coverage of core e-commerce flows |
 
 ### Key Testing Capabilities
 
@@ -323,11 +323,11 @@ test('example test without fixtures', async ({ page }) => {
 
 | Metric | Count |
 |--------|-------|
-| Total Tests | 76 |
-| Test Files | 10 |
+| Total Tests | 86 |
+| Test Files | 11 |
 | Page Objects | 7 |
 | Assertion Classes | 7 |
-| Custom Fixtures | 15 |
+| Custom Fixtures | 14 |
 | CI/CD Pipelines | 1 |
 | Browsers Tested | 3 |
 | Lines of Test Code | ~2100+ |
