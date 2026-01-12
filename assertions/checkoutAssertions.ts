@@ -127,4 +127,26 @@ export default class CheckoutAssertions {
     async verifyShippingInfoIsVisible() {
         await expect(this.checkoutPage.getShippingInfo()).toBeVisible();
     }
+
+    async verifyItemTotalIsDisplayed() {
+        await expect(this.checkoutPage.getSubtotalLabel()).toBeVisible();
+    }
+
+    async verifyTaxIsDisplayed() {
+        await expect(this.checkoutPage.getTaxLabel()).toBeVisible();
+    }
+
+    async verifyTotalPriceIsDisplayed() {
+        await expect(this.checkoutPage.getTotalLabel()).toBeVisible();
+    }
+
+    async verifyOrderConfirmationMessage() {
+        await expect(this.checkoutPage.getCompleteHeader()).toBeVisible();
+        await expect(await this.checkoutPage.getCompleteHeaderText()).toContain('Thank you for your order');
+    }
+
+    async verifyThankYouMessage() {
+        await expect(this.checkoutPage.getCompleteText()).toBeVisible();
+        await expect(await this.checkoutPage.getCompleteTextContent()).toContain('Your order has been dispatched');
+    }
 }
