@@ -402,8 +402,8 @@ This is **Project 2** of a 5-project SDET portfolio demonstrating modern test au
 [📖 SDET Portfolio Tracker - All 5 Projects](https://github.com/users/kushanparikh/projects/3/views/5?pane=info)
 
 **Portfolio Status:**
-- ✅ **Project 1**: Playwright + TypeScript Framework (Complete - 86 tests)
-- 🔨 **Project 2**: GraphQL API Testing Suite (In Progress - Week 1) ← *You are here*
+- ✅ **Project 1** (This project): Playwright + TypeScript Framework (Complete - 86 tests)
+- 🔨 **Project 2**: GraphQL API Testing Suite
 - 📋 **Project 3**: gRPC Testing Harness (Planned - Feb 2026)
 - 📋 **Project 4**: Authentication Testing Framework (Planned - Feb-Mar 2026)
 - 📋 **Project 5**: Unified Test Reporting Platform (Planned - Mar 2026)
