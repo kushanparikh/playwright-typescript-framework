@@ -2,6 +2,12 @@
 
 Automation Testing using Playwright with coding in TypeScript for Sauce Demo e-commerce application.
 
+## 📖 New to this portfolio?
+**Click the ℹ️ info icon (top right) to see the complete portfolio overview and roadmap.**
+
+Or visit: [Portfolio Overview](https://github.com/users/kushanparikh/projects/3/views/5?pane=info)
+```
+
 <details>
 <summary>Prerequisites</summary>
 
