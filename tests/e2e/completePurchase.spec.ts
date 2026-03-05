@@ -1,4 +1,4 @@
-import { test, expect } from '../fixtures/baseTest';
+import { test, expect } from '@fixtures/baseTest';
 
 test.describe('End-to-End Purchase Workflows', () => {
 
