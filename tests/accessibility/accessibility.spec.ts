@@ -1,5 +1,5 @@
-import { Page } from "@playwright/test";
-import { test, expect } from "../fixtures/baseTest";
+import { Page, TestInfo } from "@playwright/test";
+import { test, expect } from "@fixtures/baseTest";
 import { AxeBuilder } from "@axe-core/playwright";
 import { KNOWN_ACCESSIBILITY_ISSUES, KnownIssue } from "./knownAccessibilityIssues";
 
@@ -16,7 +16,7 @@ function isKnownIssue(violation: ViolationSummary, knownIssues: KnownIssue[]): b
     );
 }
 
-async function checkAccessibility(page: Page, pageName: string) {
+async function checkAccessibility(page: Page, pageName: string, testInfo: TestInfo) {
     const accessibilityScanResults = await new AxeBuilder({page})
         .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
         .analyze()
@@ -40,27 +40,25 @@ async function checkAccessibility(page: Page, pageName: string) {
         }
     });
 
-    // Log results
-    console.log(`\n${'='.repeat(80)}`);
-    console.log(`📋 Accessibility Report for ${pageName}`);
-    console.log(`${'='.repeat(80)}`);
-    console.log(`📊 Total Violations Found: ${accessibilityScanResults.violations.length}`);
-    console.log(`✅ Known Issues: ${knownViolations.length}`);
-    console.log(`🚨 New Issues: ${newViolations.length}`);
+    const summaryLines: string[] = [];
+    summaryLines.push(`Accessibility Report for ${pageName}`);
+    summaryLines.push(`Total Violations Found: ${accessibilityScanResults.violations.length}`);
+    summaryLines.push(`Known Issues: ${knownViolations.length}`);
+    summaryLines.push(`New Issues: ${newViolations.length}`);
 
-    // Log known issues
     if (knownViolations.length > 0) {
-        console.log(`\n📝 Known Issues (will not fail test):`);
+        summaryLines.push("");
+        summaryLines.push("Known Issues (will not fail test):");
         knownViolations.forEach((violation, index) => {
-            console.log(`\n  ${index + 1}. ${violation.id}`);
-            console.log(`     Impact: ${violation.impact}`);
-            console.log(`     Description: ${violation.description}`);
+            summaryLines.push(`${index + 1}. ${violation.id}`);
+            summaryLines.push(`   Impact: ${violation.impact}`);
+            summaryLines.push(`   Description: ${violation.description}`);
         });
     }
 
-    // Log new issues with full details
     if (newViolations.length > 0) {
-        console.log(`\n🚨 NEW Issues Detected (test will fail):`);
+        summaryLines.push("");
+        summaryLines.push("NEW Issues Detected (test will fail):");
         accessibilityScanResults.violations.forEach((violation, index) => {
             const summary: ViolationSummary = {
                 id: violation.id,
@@ -69,26 +67,30 @@ async function checkAccessibility(page: Page, pageName: string) {
             };
 
             if (!isKnownIssue(summary, knownIssues)) {
-                console.log(`\n  ${index + 1}. ${violation.id}`);
-                console.log(`     Impact: ${violation.impact}`);
-                console.log(`     Description: ${violation.description}`);
-                console.log(`     Help: ${violation.help}`);
-                console.log(`     Help URL: ${violation.helpUrl}`);
-                console.log(`     Affected Elements: ${violation.nodes.length}`);
-
-                // Show specific selectors for affected elements
+                summaryLines.push(`${index + 1}. ${violation.id}`);
+                summaryLines.push(`   Impact: ${violation.impact}`);
+                summaryLines.push(`   Description: ${violation.description}`);
+                summaryLines.push(`   Help: ${violation.help}`);
+                summaryLines.push(`   Help URL: ${violation.helpUrl}`);
+                summaryLines.push(`   Affected Elements: ${violation.nodes.length}`);
                 violation.nodes.forEach((node, nodeIndex) => {
-                    console.log(`       Element ${nodeIndex + 1}: ${node.target.join(', ')}`);
+                    summaryLines.push(`     Element ${nodeIndex + 1}: ${node.target.join(", ")}`);
                 });
             }
         });
     } else if (accessibilityScanResults.violations.length === 0) {
-        console.log(`\n✅ No accessibility violations found!`);
+        summaryLines.push("");
+        summaryLines.push("No accessibility violations found.");
     } else {
-        console.log(`\n✅ No new accessibility issues detected!`);
+        summaryLines.push("");
+        summaryLines.push("No new accessibility issues detected.");
     }
 
-    console.log(`\n${'='.repeat(80)}\n`);
+    const reportName = `accessibility-report-${pageName.replace(/\s+/g, "-").toLowerCase()}`;
+    await testInfo.attach(reportName, {
+        body: Buffer.from(summaryLines.join("\n")),
+        contentType: "text/plain",
+    });
 
     return {
         scanResults: accessibilityScanResults,
@@ -102,26 +104,26 @@ test.describe('Accessibility Tests - WCAG 2.1 Level AA standards', () => {
         await page.goto('/')
     })
 
-    test('Login Page accessibility validation', async ({page}) => {
-        const result = await checkAccessibility(page, 'Login Page')
+    test('Login Page accessibility validation', async ({page}, testInfo) => {
+        const result = await checkAccessibility(page, 'Login Page', testInfo)
         expect(result.newViolations, 'New accessibility violations detected').toHaveLength(0)
     })
 
-    test('Inventory Page accessibility validation', async ({page, loginPage, inventoryAssertions}) => {
+    test('Inventory Page accessibility validation', async ({page, loginPage, inventoryAssertions}, testInfo) => {
         await loginPage.login('standard_user', 'secret_sauce')
         await inventoryAssertions.verifyInventoryLandingDetails();
 
-        const result = await checkAccessibility(page, 'Inventory Page')
+        const result = await checkAccessibility(page, 'Inventory Page', testInfo)
         expect(result.newViolations, 'New accessibility violations detected').toHaveLength(0)
     })
 
-    test('Cart Page accessibility validation', async ({page, loginPage, inventoryPage, inventoryAssertions}) => {
+    test('Cart Page accessibility validation', async ({page, loginPage, inventoryPage, inventoryAssertions}, testInfo) => {
         await loginPage.login('standard_user', 'secret_sauce')
         await inventoryAssertions.verifyInventoryLandingDetails();
         await inventoryPage.addItemToCart('sauce-labs-backpack')
         await inventoryPage.clickCartLink()
 
-        const result = await checkAccessibility(page, 'Cart Page')
+        const result = await checkAccessibility(page, 'Cart Page', testInfo)
         expect(result.newViolations, 'New accessibility violations detected').toHaveLength(0)
     })
 })

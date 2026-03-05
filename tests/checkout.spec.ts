@@ -1,4 +1,4 @@
-import { test, expect } from './fixtures/baseTest';
+import { test, expect } from '@fixtures/baseTest';
 
 test.beforeEach(async ({ page, loginPage, inventoryPage, loginAssertions, inventoryAssertions }) => {
   await page.goto('/');
