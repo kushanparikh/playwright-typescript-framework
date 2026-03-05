@@ -40,15 +40,20 @@ async function checkAccessibility(page: Page, pageName: string, testInfo: TestIn
         }
     });
 
+    const separator = "================================================================================";
+    const totalViolations = accessibilityScanResults.violations.length;
+
     const summaryLines: string[] = [];
-    summaryLines.push(`Accessibility Report for ${pageName}`);
-    summaryLines.push(`Total Violations Found: ${accessibilityScanResults.violations.length}`);
-    summaryLines.push(`Known Issues: ${knownViolations.length}`);
-    summaryLines.push(`New Issues: ${newViolations.length}`);
+    summaryLines.push(separator);
+    summaryLines.push(`📋 Accessibility Report for ${pageName}`);
+    summaryLines.push(separator);
+    summaryLines.push(`📊 Total Violations Found: ${totalViolations}`);
+    summaryLines.push(`✅ Known Issues: ${knownViolations.length}`);
+    summaryLines.push(`🚨 New Issues: ${newViolations.length}`);
 
     if (knownViolations.length > 0) {
         summaryLines.push("");
-        summaryLines.push("Known Issues (will not fail test):");
+        summaryLines.push("📝 Known Issues (will not fail test):");
         knownViolations.forEach((violation, index) => {
             summaryLines.push(`${index + 1}. ${violation.id}`);
             summaryLines.push(`   Impact: ${violation.impact}`);
@@ -58,7 +63,7 @@ async function checkAccessibility(page: Page, pageName: string, testInfo: TestIn
 
     if (newViolations.length > 0) {
         summaryLines.push("");
-        summaryLines.push("NEW Issues Detected (test will fail):");
+        summaryLines.push("🚨 NEW Issues Detected (test will fail):");
         accessibilityScanResults.violations.forEach((violation, index) => {
             const summary: ViolationSummary = {
                 id: violation.id,
@@ -78,13 +83,16 @@ async function checkAccessibility(page: Page, pageName: string, testInfo: TestIn
                 });
             }
         });
-    } else if (accessibilityScanResults.violations.length === 0) {
+    } else if (totalViolations === 0) {
         summaryLines.push("");
-        summaryLines.push("No accessibility violations found.");
+        summaryLines.push("✅ No accessibility violations found.");
     } else {
         summaryLines.push("");
-        summaryLines.push("No new accessibility issues detected.");
+        summaryLines.push("✅ No new accessibility issues detected.");
     }
+
+    summaryLines.push("");
+    summaryLines.push(separator);
 
     const reportName = `accessibility-report-${pageName.replace(/\s+/g, "-").toLowerCase()}`;
     await testInfo.attach(reportName, {
