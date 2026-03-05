@@ -2,6 +2,10 @@
 
 Automation Testing using Playwright with coding in TypeScript for Sauce Demo e-commerce application.
 
+---
+###### 📖 New to this portfolio? visit: [Portfolio Overview](https://github.com/users/kushanparikh/projects/3/views/5?pane=info)
+---
+
 <details>
 <summary>Prerequisites</summary>
 
@@ -392,13 +396,20 @@ test('example test without fixtures', async ({ page }) => {
 - **[ARCHITECTURE.md](docs/ARCHITECTURE.md)**: High-level architecture overview explaining design decisions and framework structure
 - **[CHANGELOG.md](CHANGELOG.md)**: Version history and feature evolution
 
-## Portfolio Context
+---
 
-This project is part of a 5-project SDET portfolio demonstrating modern test automation expertise:
-1. **Playwright + TypeScript Framework** (This project) - UI testing foundation
-2. GraphQL API Testing Suite - Modern API patterns
-3. gRPC Testing Harness - Protocol buffer testing
-4. Authentication Testing Framework - OAuth, JWT, SAML
-5. Unified Test Reporting Platform - Cross-project result aggregation
+## 📊 Portfolio Project Tracking
+
+This is **Project 2** of a 5-project SDET portfolio demonstrating modern test automation expertise.
+
+**View complete portfolio roadmap:**  
+[📖 SDET Portfolio Tracker - All 5 Projects](https://github.com/users/kushanparikh/projects/3/views/5?pane=info)
+
+**Portfolio Status:**
+- ✅ **Project 1** (This project): Playwright + TypeScript Framework (Complete - 86 tests)
+- 🔨 **Project 2**: GraphQL API Testing Suite
+- 📋 **Project 3**: gRPC Testing Harness (Planned - Feb 2026)
+- 📋 **Project 4**: Authentication Testing Framework (Planned - Feb-Mar 2026)
+- 📋 **Project 5**: Unified Test Reporting Platform (Planned - Mar 2026)
 
 Each project showcases different aspects of modern test automation while building toward a comprehensive testing ecosystem.
