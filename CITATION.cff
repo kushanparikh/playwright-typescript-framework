@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+title: "Playwright TypeScript Framework"
+abstract: "Test automation framework using Playwright with TypeScript."
+type: software
+authors:
+  - family-names: "Parikh"
+    given-names: "Kushan"
+    orcid: "https://orcid.org/0009-0004-2457-8605"
+repository-code: "https://github.com/kushanparikh/playwright-typescript-framework"
+license: MIT
+version: 1.0.0
+date-released: "2026-10-14"
+keywords:
+  - playwright
+  - typescript
+  - test automation
