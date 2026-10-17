@@ -6,3 +6,5 @@ node_modules/
 /playwright/.cache/
 /playwright/.auth/
 .DS_Store
+.claude/
+/docs/notes.md
