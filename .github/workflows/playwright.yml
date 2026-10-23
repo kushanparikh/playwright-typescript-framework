@@ -5,6 +5,8 @@ on:
   pull_request:
     branches: [ main, master ]
   workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * *'
 jobs:
   test:
     timeout-minutes: 60
@@ -22,6 +24,14 @@ jobs:
       # Continue even if tests fail (known failures expected)
       continue-on-error: true
       run: npx playwright test
+    - name: Upload results for unified-test-reporting
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: utr-results
+        path: results/playwright.json
+        retention-days: 90
+        if-no-files-found: error
     - name: Upload test results (including diffs)
       # Changed from 'failure()' to 'always()' to upload even on soft failures
       if: always()
