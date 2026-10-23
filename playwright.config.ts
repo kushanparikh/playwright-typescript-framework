@@ -25,6 +25,9 @@ export default defineConfig({
   reporter: [
     ['html'],
     ['json', { outputFile: 'results/playwright.json' }],
+    ['@testdino/playwright', {
+      token: process.env.TESTDINO_TOKEN,
+    }],
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
